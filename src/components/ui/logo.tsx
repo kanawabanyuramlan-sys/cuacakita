@@ -43,7 +43,7 @@ export function Logo({
         </span>
         <span
           className={cn(
-            "mt-0.5 block text-[10.5px] font-semibold",
+            "mt-0.5 hidden text-[10.5px] font-semibold sm:block",
             tone === "white" ? "text-white/45" : "text-ink-3",
           )}
         >

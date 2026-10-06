@@ -95,8 +95,8 @@
   to { transform: translateX(112%); }
 }
 @keyframes denyut {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50% { opacity: 0.12; transform: scale(1.55); }
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.14; transform: scale(1.12); }
 }
 
 /* ─────────────────────────────────────────────────────────────
