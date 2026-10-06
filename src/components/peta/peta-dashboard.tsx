@@ -66,7 +66,7 @@ export function PetaDashboard({
       </div>
 
         {/* Pemilih lapisan, mengambang di kanan atas */}
-        <div className="absolute right-4 top-4 z-[500] flex max-w-[60%] flex-wrap justify-end gap-1">
+        <div className="absolute right-4 top-16 z-[500] flex max-w-[62%] flex-wrap justify-end gap-1 sm:top-4">
           {PILIHAN.map((id) => {
             const l = LAPISAN.find((x) => x.id === id)!;
             return (
