@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+/* Tema gelap dikendalikan atribut [data-theme="dark"] pada <html> agar
+   pilihan pengguna selalu menang atas preferensi sistem. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* ───── Tipografi ───── */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-instrument), Georgia, "Times New Roman", serif;
+
+  /* ───── Netral ───── */
+  --color-canvas: #eef3f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f6f9fc;
+  --color-ink: #0b1626;
+  --color-ink-2: #4a5a70;
+  --color-ink-3: #7d8ea4;
+  --color-line: #e3eaf2;
+  --color-line-strong: #cfdae8;
+
+  /* Latar gelap untuk hero, peta, dan footer */
+  --color-night: #070d18;
+  --color-night-2: #0e1726;
+  --color-night-3: #162134;
+  --color-night-line: #1f2c42;
+
+  /* ───── Merek: biru langit ───── */
+  --color-brand-50: #eaf4fe;
+  --color-brand-100: #cfe6fc;
+  --color-brand-200: #a5d0f9;
+  --color-brand-300: #6fb3f4;
+  --color-brand-400: #3b92eb;
+  --color-brand-500: #1c76db;
+  --color-brand-600: #1360bc;
+  --color-brand-700: #104e97;
+  --color-brand-800: #123f76;
+  --color-brand-900: #0e2c52;
+
+  /* ───── Aksen ───── */
+  --color-zest: #bff24a;
+  --color-zest-dark: #a3d92f;
+  --color-zest-ink: #27350a;
+
+  /* ───── Tint kartu ───── */
+  --color-tint-sky: #dbeafe;
+  --color-tint-sky-ink: #11498c;
+  --color-tint-mint: #d4f5e6;
+  --color-tint-mint-ink: #0a6245;
+  --color-tint-sun: #ffeec2;
+  --color-tint-sun-ink: #8a5900;
+  --color-tint-rose: #ffdfe3;
+  --color-tint-rose-ink: #9a2230;
+  --color-tint-lavender: #e6e6ff;
+  --color-tint-lavender-ink: #3a32a5;
+  --color-tint-slate: #e4ebf3;
+  --color-tint-slate-ink: #2f4256;
+
+  /* ───── Tingkat risiko ─────
+     Dipakai HANYA untuk Rendah / Sedang / Tinggi / Sangat Tinggi, tidak
+     pernah sebagai warna seri grafik, dan selalu berpasangan dengan label. */
+  --color-tingkat-rendah: #0ca30c;
+  --color-tingkat-sedang: #fab219;
+  --color-tingkat-tinggi: #ec835a;
+  --color-tingkat-sangat: #d03b3b;
+
+  /* ───── Radius ───── */
+  --radius-card: 1.5rem;
+  --radius-panel: 2rem;
+  --radius-tile: 1.125rem;
+  --radius-pill: 9999px;
+
+  /* ───── Bayangan ───── */
+  --shadow-tile: 0 1px 2px rgb(11 22 38 / 0.04), 0 4px 12px -4px rgb(11 22 38 / 0.07);
+  --shadow-card: 0 1px 2px rgb(11 22 38 / 0.04), 0 10px 28px -12px rgb(11 22 38 / 0.14);
+  --shadow-float: 0 2px 4px rgb(11 22 38 / 0.05), 0 24px 56px -20px rgb(11 22 38 / 0.26);
+
+  /* ───── Animasi ───── */
+  --animate-rise: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-awan: awan 42s linear infinite;
+  --animate-denyut: denyut 2.6s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes awan {
+  from { transform: translateX(-12%); }
+  to { transform: translateX(112%); }
+}
+@keyframes denyut {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.12; transform: scale(1.55); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Token grafik.
+   Nilai di bawah sudah lolos scripts/validate_palette.js dari skill
+   dataviz, diuji terhadap permukaan yang benar-benar dipakai di sini:
+     light #ffffff · dark #0e1726 · mode --pairs all
+   Catatan: akua (seri 3) berada di 2,82:1 pada latar terang — di bawah
+   3:1. Kelonggaran yang disyaratkan dipenuhi karena SETIAP grafik di
+   aplikasi ini punya kembaran tabel (lihat components/charts/chart-frame).
+   Jangan mengubah hex ini tanpa menjalankan ulang validator.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --viz-surface: #ffffff;
+  --viz-grid: #e3eaf2;
+  --viz-axis: #c3d0e0;
+  --viz-ink: #0b1626;
+  --viz-ink-2: #4a5a70;
+  --viz-ink-3: #7d8ea4;
+
+  --viz-hujan: #2a78d6;
+  --viz-suhu: #eb6834;
+  --viz-lembap: #1baf7a;
+
+  /* Ramp ordinal biru untuk intensitas hujan (terang → gelap) */
+  --viz-seq-1: #5598e7;
+  --viz-seq-2: #2a78d6;
+  --viz-seq-3: #256abf;
+  --viz-seq-4: #184f95;
+  --viz-seq-5: #0d366b;
+
+  --viz-track: #e7eff9;
+  --viz-muted: #c3d0e0;
+}
+
+[data-theme="dark"] {
+  --color-canvas: #070d18;
+  --color-surface: #0e1726;
+  --color-surface-2: #162134;
+  --color-ink: #eef3f9;
+  --color-ink-2: #a3b3c7;
+  --color-ink-3: #7889a0;
+  --color-line: #1f2c42;
+  --color-line-strong: #2b3b55;
+
+  --viz-surface: #0e1726;
+  --viz-grid: #1f2c42;
+  --viz-axis: #34455f;
+  --viz-ink: #eef3f9;
+  --viz-ink-2: #a3b3c7;
+  --viz-ink-3: #7889a0;
+
+  --viz-hujan: #3987e5;
+  --viz-suhu: #d95926;
+  --viz-lembap: #199e70;
+
+  --viz-seq-1: #0d366b;
+  --viz-seq-2: #184f95;
+  --viz-seq-3: #256abf;
+  --viz-seq-4: #2a78d6;
+  --viz-seq-5: #5598e7;
+
+  --viz-track: #182742;
+  --viz-muted: #34455f;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  html[data-theme="dark"] { color-scheme: dark; }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Fokus keyboard harus selalu terlihat */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background-color: var(--color-brand-200);
+    color: var(--color-brand-900);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility text-balance-pretty { text-wrap: pretty; }
+
+/** Kanvas aplikasi: gradien sangat halus bernuansa langit. */
+@utility app-canvas {
+  background-image:
+    radial-gradient(1100px 560px at 10% -8%, color-mix(in oklab, var(--color-brand-200) 50%, transparent), transparent 62%),
+    radial-gradient(900px 480px at 94% 2%, color-mix(in oklab, var(--color-tint-mint) 60%, transparent), transparent 58%);
+  background-attachment: fixed;
+}
+
+/** Langit malam berkisi untuk hero dan footer. */
+@utility night-sky {
+  background-image:
+    radial-gradient(1000px 520px at 50% -12%, rgb(28 118 219 / 0.4), transparent 72%),
+    radial-gradient(700px 400px at 12% 18%, rgb(27 175 122 / 0.14), transparent 70%),
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+}
+
+/** Panel kaca di atas peta — motif utama pada referensi desain. */
+@utility kaca {
+  background-color: color-mix(in oklab, var(--color-surface) 76%, transparent);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid color-mix(in oklab, var(--color-surface) 55%, transparent);
+}
+
+@utility kaca-gelap {
+  background-color: rgb(14 23 38 / 0.72);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
