@@ -12,6 +12,7 @@ import {
 import { KartuSektor } from "@/components/dashboard/kartu-sektor";
 import { GrafikPerJam } from "@/components/dashboard/grafik-perjam";
 import { PanelBMKG, PanelInsight } from "@/components/dashboard/panel";
+import { TanyaCuacaKita } from "@/components/dashboard/tanya";
 import { PetaRingkas } from "@/components/peta/peta-pembungkus";
 import { RantaiDampak } from "@/components/rantai-dampak";
 import { Card } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import { muatPeta, type TitikPeta } from "@/server/peta";
 import { bangunRantai } from "@/lib/impact/rantai";
 import { susunInsight } from "@/lib/impact/insight";
 import { susunSaran } from "@/lib/impact/saran";
+import { susunTanya } from "@/lib/impact/tanya";
 import { LOKASI_BAWAAN } from "@/lib/lokasi";
 
 export const revalidate = 900;
@@ -54,6 +56,7 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
   const simpul = bangunRantai(kondisi, sektor, cuaca.sekarang.labelCuaca);
   const insight = susunInsight(cuaca, kondisi, sektor);
   const saran = susunSaran(cuaca, kondisi, sektor);
+  const tanya = susunTanya(cuaca, kondisi, sektor);
   const namaKota = data.kota?.nama ?? cuaca.lokasi.nama;
   const perluWaspada = sektor.filter((s) => s.skor >= 50);
 
@@ -160,10 +163,13 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
           </div>
         </section>
 
-        {/* Penjelasan panjang + prakiraan resmi */}
+        {/* Tanya jawab + penjelasan panjang */}
         <div className="grid gap-3 xl:grid-cols-2">
-          <PanelInsight insight={insight} />
-          <PanelBMKG bmkg={bmkg} catatan={catatanBMKG} />
+          <TanyaCuacaKita jawaban={tanya} />
+          <div className="space-y-3">
+            <PanelInsight insight={insight} />
+            <PanelBMKG bmkg={bmkg} catatan={catatanBMKG} />
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5 text-[12px] leading-relaxed text-ink-3 sm:flex-row sm:items-center">

@@ -8,10 +8,14 @@ import { cn } from "@/lib/cn";
 import { LogoMark } from "@/components/ui/logo";
 import { CariLokasi } from "./cari-lokasi";
 
+/** `bawaKota` menandai halaman yang bergantung pada lokasi terpilih,
+ *  supaya pindah menu tidak diam-diam melempar pengguna kembali ke
+ *  kota bawaan — kebingungan kecil yang paling sering terjadi. */
 const menu = [
-  { label: "Ringkasan", href: "/dashboard" },
-  { label: "Peta Risiko", href: "/peta" },
-  { label: "Riwayat", href: "/histori" },
+  { label: "Ringkasan", href: "/dashboard", bawaKota: true },
+  { label: "Komoditas", href: "/komoditas", bawaKota: true },
+  { label: "Peta Risiko", href: "/peta", bawaKota: false },
+  { label: "Riwayat", href: "/histori", bawaKota: true },
 ];
 
 export function Topbar({
@@ -49,10 +53,13 @@ export function Topbar({
       >
         {menu.map((m) => {
           const aktif = pathname === m.href;
+          const href = m.bawaKota
+            ? `${m.href}?kota=${encodeURIComponent(kota)}`
+            : m.href;
           return (
             <Link
               key={m.href}
-              href={m.href}
+              href={href}
               aria-current={aktif ? "page" : undefined}
               className={cn(
                 "whitespace-nowrap rounded-pill px-3.5 py-1.5 text-[13px] font-semibold transition-colors",
