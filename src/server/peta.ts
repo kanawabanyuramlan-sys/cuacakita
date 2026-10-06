@@ -26,6 +26,9 @@ export type TitikPeta = {
   hujan24j: number;
   hujan72j: number;
   angin: number;
+  /** Dipakai daftar peringatan nasional agar ambangnya sama persis. */
+  suhuMaks: number;
+  hembusanMaks: number;
   kelembapan: number;
   skor: {
     pertanian: number;
@@ -63,6 +66,8 @@ export async function muatPeta(): Promise<{
       hujan24j: Math.round(kondisi.hujan24j * 10) / 10,
       hujan72j: Math.round(kondisi.hujan72j * 10) / 10,
       angin: Math.round(p.sekarang.anginKecepatan),
+      suhuMaks: Math.round(kondisi.suhuMaks * 10) / 10,
+      hembusanMaks: Math.round(kondisi.hembusanMaks),
       kelembapan: p.sekarang.kelembapan,
       skor: {
         pertanian: sektor.find((s) => s.id === "pertanian")?.skor ?? 0,

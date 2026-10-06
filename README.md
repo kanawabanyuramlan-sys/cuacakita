@@ -122,7 +122,10 @@ lain bisa dipasang di kemudian hari tanpa membongkar yang lain.
 src/
 ├── app/                      Halaman dan route API (Next.js App Router)
 │   ├── page.tsx              Landing page
-│   ├── dashboard/            Dashboard cuaca + dampak
+│   ├── dashboard/            Ringkasan cuaca + dampak
+│   ├── peringatan/           Sistem peringatan + daftar kota nasional
+│   ├── komoditas/            Dua belas komoditas + simulasi pengandaian
+│   ├── pasokan/              Rantai cuaca → produksi → pasokan → harga
 │   ├── peta/                 Peta cuaca & risiko (Leaflet)
 │   ├── histori/              Histori dan perbandingan antarperiode
 │   └── api/cuaca/            Route API dengan validasi Zod
@@ -140,6 +143,11 @@ src/
 │   ├── impact/
 │   │   ├── engine.ts         Enam sektor, bobot, dan skenario simulasi
 │   │   ├── rantai.ts         Rantai dampak + tingkat keyakinan
+│   │   ├── pasokan.ts        Lima langkah cuaca sampai harga
+│   │   ├── komoditas.ts      Profil kepekaan dua belas komoditas
+│   │   ├── peringatan.ts     Ambang peringatan mengacu klasifikasi BMKG
+│   │   ├── saran.ts          Saran harian bahasa sehari-hari
+│   │   ├── tanya.ts          Tanya jawab terarah dari data
 │   │   └── insight.ts        Penyusun ringkasan deterministik
 │   └── lokasi.ts             Daftar kota terverifikasi
 │
@@ -151,6 +159,39 @@ Setiap adapter sumber data wajib menghasilkan bentuk kanonik di
 `src/lib/weather/types.ts`. Seluruh aplikasi hanya bicara dengan tipe itu,
 tidak pernah langsung dengan bentuk mentah milik penyedia — sehingga sumber
 data dapat diganti tanpa menyentuh satu pun komponen.
+
+---
+
+## Untuk pengunjung yang baru pertama kali
+
+Bagian pertama yang dibaca bukan angka, melainkan satu kalimat yang bisa
+langsung ditindaklanjuti, lalu tiga pertanyaan yang memang ditanyakan orang
+sehari-hari: perlu bawa payung, aman berkendara, jemuran cepat kering.
+Skor dan rumus baru muncul setelahnya, bagi yang ingin menelusuri.
+
+**Tanya CuacaKita** memakai daftar pertanyaan siap pakai, bukan kolom ketik
+bebas. Bagi orang yang baru membuka situs cuaca, melihat pertanyaan yang
+memang ada di kepalanya lebih membantu daripada kursor berkedip.
+
+## Sistem peringatan
+
+Istilah resmi BMKG — "Waspada", "Siaga", "Awas" — **sengaja tidak dipakai**.
+Ketiganya punya arti tertentu dalam sistem peringatan dini nasional, dan
+memakainya akan membuat indikator analitis tampak seperti pengumuman
+pemerintah. CuacaKita memakai "Perhatian" dan "Penting". Ambang batasnya
+sendiri mengacu pada klasifikasi curah hujan BMKG.
+
+Saat tidak ada peringatan, halaman tetap menampilkan tiap pengukuran
+berdampingan dengan ambangnya, sehingga "aman" bisa diperiksa, bukan sekadar
+diklaim.
+
+## Gerak
+
+Ikon cuaca benar-benar bergerak sesuai artinya — hujan jatuh bergantian,
+matahari berputar pelan, petir berkedip tidak beraturan, awan mengapung.
+Kartu muncul bertahap saat halaman dibuka, bukan serentak. Seluruh animasi
+berhenti otomatis bila pengguna menyalakan "kurangi gerak" di sistem
+operasinya.
 
 ---
 

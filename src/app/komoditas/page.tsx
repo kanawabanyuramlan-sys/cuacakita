@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { muatHalaman } from "@/server/cuaca";
 import { hitungRisikoKomoditas, tekananCuaca } from "@/lib/impact/komoditas";
 import { SKENARIO } from "@/lib/impact/engine";
+import { susunPeringatan } from "@/lib/impact/peringatan";
 import { LOKASI_BAWAAN } from "@/lib/lokasi";
 
 export const revalidate = 900;
@@ -46,7 +47,7 @@ export default async function KomoditasPage(props: PageProps<"/komoditas">) {
     );
   }
 
-  const { cuaca, kondisi } = data;
+  const { cuaca, kondisi, sektor } = data;
   const namaKota = data.kota?.nama ?? cuaca.lokasi.nama;
   const risiko = hitungRisikoKomoditas(kondisi);
   const tekanan = tekananCuaca(kondisi);
@@ -64,13 +65,18 @@ export default async function KomoditasPage(props: PageProps<"/komoditas">) {
     { nama: "Kering berkepanjangan", nilai: tekanan.kekeringan },
   ].sort((a, b) => b.nilai - a.nilai);
 
+  const jumlahPeringatan = susunPeringatan(cuaca, kondisi, sektor).length;
   const jam = new Date(cuaca.diambilPada).toLocaleTimeString("id-ID", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
   return (
-    <Kerangka kota={namaKota} diperbaruiPada={jam}>
+    <Kerangka
+      kota={namaKota}
+      diperbaruiPada={jam}
+      jumlahPeringatan={jumlahPeringatan}
+    >
       <div className="space-y-3">
         <div className="px-1 pt-2">
           <h1 className="text-[22px] font-extrabold tracking-tight text-ink">

@@ -48,7 +48,7 @@ export function KartuSaran({
   return (
     <section
       aria-label="Ringkasan untuk hari ini"
-      className={cn("rounded-card border p-5 shadow-tile", g.kelas)}
+      className={cn("muncul rounded-card border p-5 shadow-tile", g.kelas)}
     >
       <div className="flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center gap-1.5 rounded-pill bg-surface px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-ink">

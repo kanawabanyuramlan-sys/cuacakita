@@ -14,18 +14,24 @@ import { Topbar } from "./topbar";
 export function Kerangka({
   kota,
   diperbaruiPada,
+  jumlahPeringatan,
   strip,
   children,
 }: {
   kota: string;
   diperbaruiPada?: string;
+  jumlahPeringatan?: number;
   strip?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <div className="langit min-h-screen px-0 py-0 sm:px-5 sm:py-5 lg:px-10 lg:py-8">
       <div className="panel-utama mx-auto max-w-[1480px] overflow-hidden sm:rounded-panel">
-        <Topbar kota={kota} diperbaruiPada={diperbaruiPada} />
+        <Topbar
+          kota={kota}
+          diperbaruiPada={diperbaruiPada}
+          jumlahPeringatan={jumlahPeringatan}
+        />
         {strip}
         <div className="bg-canvas/60 p-3 sm:p-4">{children}</div>
       </div>

@@ -20,7 +20,7 @@ export function KartuSektor({ sektor }: { sektor: SkorDampak }) {
   const pengali = sektor.faktor.find((f) => f.peran === "pengali");
 
   return (
-    <article className="flex flex-col rounded-card border border-line bg-surface shadow-tile">
+    <article className="kartu-angkat flex flex-col rounded-card border border-line bg-surface shadow-tile">
       <div className="flex items-start gap-4 p-5">
         <CincinSkor skor={sektor.skor} tingkat={sektor.tingkat} ukuran={68} />
         <div className="min-w-0 flex-1">

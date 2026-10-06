@@ -23,6 +23,7 @@ import { bangunRantai } from "@/lib/impact/rantai";
 import { susunInsight } from "@/lib/impact/insight";
 import { susunSaran } from "@/lib/impact/saran";
 import { susunTanya } from "@/lib/impact/tanya";
+import { susunPeringatan } from "@/lib/impact/peringatan";
 import { LOKASI_BAWAAN } from "@/lib/lokasi";
 
 export const revalidate = 900;
@@ -60,6 +61,7 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
   const namaKota = data.kota?.nama ?? cuaca.lokasi.nama;
   const perluWaspada = sektor.filter((s) => s.skor >= 50);
 
+  const jumlahPeringatan = susunPeringatan(cuaca, kondisi, sektor).length;
   const jam = new Date(cuaca.diambilPada).toLocaleTimeString("id-ID", {
     hour: "2-digit",
     minute: "2-digit",
@@ -69,6 +71,7 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
     <Kerangka
       kota={namaKota}
       diperbaruiPada={jam}
+      jumlahPeringatan={jumlahPeringatan}
       strip={
         <StripLangsung
           mendesak={saran.nada === "waspada"}
@@ -98,7 +101,10 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
         <KartuSaran saran={saran} kota={namaKota} />
 
         {/* Peta di kiri, rincian di kanan — susunan utama seperti referensi */}
-        <div className="grid gap-3 xl:grid-cols-[1.55fr_1fr]">
+        <div
+          style={{ "--tunda": "110ms" } as React.CSSProperties}
+          className="muncul grid gap-3 xl:grid-cols-[1.55fr_1fr]"
+        >
           <div className="space-y-3">
             {titikPeta.length > 0 ? (
               <PetaRingkas
@@ -127,7 +133,11 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
         </div>
 
         {/* Rantai dampak */}
-        <Card id="rantai" className="p-5">
+        <Card
+          id="rantai"
+          style={{ "--tunda": "190ms" } as React.CSSProperties}
+          className="muncul p-5"
+        >
           <h2 className="text-[17px] font-extrabold tracking-tight text-ink">
             Dari cuaca, ke mana saja pengaruhnya?
           </h2>
@@ -139,7 +149,11 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
         </Card>
 
         {/* Rincian enam sektor */}
-        <section id="dampak" className="scroll-mt-4">
+        <section
+          id="dampak"
+          style={{ "--tunda": "260ms" } as React.CSSProperties}
+          className="muncul scroll-mt-4"
+        >
           <div className="flex flex-wrap items-end justify-between gap-3 px-1 pb-3 pt-2">
             <div>
               <h2 className="text-[19px] font-extrabold tracking-tight text-ink">
@@ -164,7 +178,10 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
         </section>
 
         {/* Tanya jawab + penjelasan panjang */}
-        <div className="grid gap-3 xl:grid-cols-2">
+        <div
+          style={{ "--tunda": "330ms" } as React.CSSProperties}
+          className="muncul grid gap-3 xl:grid-cols-2"
+        >
           <TanyaCuacaKita jawaban={tanya} />
           <div className="space-y-3">
             <PanelInsight insight={insight} />

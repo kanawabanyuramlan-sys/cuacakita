@@ -12,18 +12,23 @@ import { CariLokasi } from "./cari-lokasi";
  *  supaya pindah menu tidak diam-diam melempar pengguna kembali ke
  *  kota bawaan — kebingungan kecil yang paling sering terjadi. */
 const menu = [
-  { label: "Ringkasan", href: "/dashboard", bawaKota: true },
-  { label: "Komoditas", href: "/komoditas", bawaKota: true },
-  { label: "Peta Risiko", href: "/peta", bawaKota: false },
-  { label: "Riwayat", href: "/histori", bawaKota: true },
+  { label: "Ringkasan", href: "/dashboard", bawaKota: true, lencana: false },
+  { label: "Peringatan", href: "/peringatan", bawaKota: true, lencana: true },
+  { label: "Komoditas", href: "/komoditas", bawaKota: true, lencana: false },
+  { label: "Pasokan", href: "/pasokan", bawaKota: true, lencana: false },
+  { label: "Peta Risiko", href: "/peta", bawaKota: false, lencana: false },
+  { label: "Riwayat", href: "/histori", bawaKota: true, lencana: false },
 ];
 
 export function Topbar({
   kota,
   diperbaruiPada,
+  jumlahPeringatan,
 }: {
   kota: string;
   diperbaruiPada?: string;
+  /** Tidak semua halaman menghitungnya; bila tidak ada, lencana disembunyikan. */
+  jumlahPeringatan?: number;
 }) {
   const pathname = usePathname();
   const [gelap, setGelap] = useState(false);
@@ -69,6 +74,11 @@ export function Topbar({
               )}
             >
               {m.label}
+              {m.lencana && jumlahPeringatan ? (
+                <span className="ml-1.5 inline-flex min-w-4 items-center justify-center rounded-pill bg-[color:var(--color-tingkat-tinggi)] px-1 text-[10px] font-extrabold text-white">
+                  {jumlahPeringatan}
+                </span>
+              ) : null}
             </Link>
           );
         })}

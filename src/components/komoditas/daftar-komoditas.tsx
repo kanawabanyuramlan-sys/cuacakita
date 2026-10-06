@@ -111,12 +111,13 @@ export function DaftarKomoditas({
       ) : null}
 
       <ul className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        {tampil.map((r) => {
+        {tampil.map((r, i) => {
           const nyata = nilaiNyata.get(r.komoditas.id) ?? 0;
           return (
             <li
               key={r.komoditas.id}
-              className="flex flex-col rounded-card border border-line bg-surface p-5 shadow-tile"
+              style={{ "--tunda": `${i * 45}ms` } as React.CSSProperties}
+              className="muncul kartu-angkat flex flex-col rounded-card border border-line bg-surface p-5 shadow-tile"
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl leading-none" aria-hidden>
