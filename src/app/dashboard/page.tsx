@@ -1,17 +1,26 @@
 import Link from "next/link";
-import { AlertTriangle, RefreshCw, ShieldAlert } from "lucide-react";
-import { Topbar } from "@/components/dashboard/topbar";
-import { KartuSekarang } from "@/components/dashboard/kartu-sekarang";
+import { ArrowRight, RefreshCw, ShieldAlert } from "lucide-react";
+import { Kerangka, StripLangsung } from "@/components/shell/kerangka";
+import { TombolCetak } from "@/components/shell/tombol-cetak";
+import { PemilihLokasi } from "@/components/dashboard/pemilih-lokasi";
+import { KartuSaran } from "@/components/dashboard/kartu-saran";
+import {
+  DampakRingkas,
+  DetailCuaca,
+  PrakiraanRingkas,
+} from "@/components/dashboard/panel-kanan";
 import { KartuSektor } from "@/components/dashboard/kartu-sektor";
 import { GrafikPerJam } from "@/components/dashboard/grafik-perjam";
 import { PanelBMKG, PanelInsight } from "@/components/dashboard/panel";
+import { PetaRingkas } from "@/components/peta/peta-pembungkus";
 import { RantaiDampak } from "@/components/rantai-dampak";
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { ButtonLink } from "@/components/ui/button";
-import { IkonCuaca } from "@/components/ui/ikon-cuaca";
 import { muatHalaman } from "@/server/cuaca";
+import { muatPeta, type TitikPeta } from "@/server/peta";
 import { bangunRantai } from "@/lib/impact/rantai";
 import { susunInsight } from "@/lib/impact/insight";
+import { susunSaran } from "@/lib/impact/saran";
 import { LOKASI_BAWAAN } from "@/lib/lokasi";
 
 export const revalidate = 900;
@@ -33,107 +42,113 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
     return <HalamanGagal kota={diminta} />;
   }
 
+  // Peta bersifat pelengkap: kegagalannya tidak boleh menjatuhkan dashboard.
+  let titikPeta: TitikPeta[] = [];
+  try {
+    titikPeta = (await muatPeta()).titik;
+  } catch {
+    titikPeta = [];
+  }
+
   const { cuaca, kondisi, sektor, bmkg, catatanBMKG } = data;
   const simpul = bangunRantai(kondisi, sektor, cuaca.sekarang.labelCuaca);
   const insight = susunInsight(cuaca, kondisi, sektor);
+  const saran = susunSaran(cuaca, kondisi, sektor);
   const namaKota = data.kota?.nama ?? cuaca.lokasi.nama;
-
   const perluWaspada = sektor.filter((s) => s.skor >= 50);
 
+  const jam = new Date(cuaca.diambilPada).toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
-    <div className="app-canvas min-h-screen">
-      <Topbar kota={namaKota} />
+    <Kerangka
+      kota={namaKota}
+      diperbaruiPada={jam}
+      strip={
+        <StripLangsung
+          mendesak={saran.nada === "waspada"}
+          pesan={
+            <>
+              <strong className="font-bold text-ink">{saran.judul}</strong>{" "}
+              <Link
+                href="#dampak"
+                className="inline-flex items-center gap-0.5 font-bold text-brand-700 hover:underline"
+              >
+                Lihat rincian
+                <ArrowRight className="size-3" strokeWidth={2.75} aria-hidden />
+              </Link>
+            </>
+          }
+          kanan={
+            <>
+              <PemilihLokasi terpilih={namaKota} />
+              <TombolCetak />
+            </>
+          }
+        />
+      }
+    >
+      <div className="space-y-3">
+        {/* Ringkasan bahasa sehari-hari — bagian pertama yang dibaca */}
+        <KartuSaran saran={saran} kota={namaKota} />
 
-      <main className="mx-auto max-w-[1500px] space-y-3 px-4 py-4 sm:px-6">
-        {/* Peringatan, hanya muncul bila memang ada yang perlu diperhatikan */}
-        {perluWaspada.length > 0 ? (
-          <div className="flex flex-col gap-3 rounded-card border border-[color:var(--color-tingkat-sedang)]/35 bg-tint-sun/45 p-4 sm:flex-row sm:items-center">
-            <AlertTriangle
-              className="size-5 shrink-0 text-[color:var(--color-tingkat-sedang)]"
-              strokeWidth={2.5}
-              aria-hidden
-            />
-            <p className="text-[13px] leading-relaxed text-ink-2">
-              <strong className="font-bold text-ink">
-                Perlu kewaspadaan:{" "}
-                {perluWaspada.map((s) => s.nama.toLowerCase()).join(", ")}.
-              </strong>{" "}
-              Ini indikator analitis CuacaKita, bukan peringatan dini resmi.
-              Untuk peringatan resmi, ikuti BMKG dan BPBD setempat.
-            </p>
+        {/* Peta di kiri, rincian di kanan — susunan utama seperti referensi */}
+        <div className="grid gap-3 xl:grid-cols-[1.55fr_1fr]">
+          <div className="space-y-3">
+            {titikPeta.length > 0 ? (
+              <PetaRingkas
+                titik={titikPeta}
+                pusat={[cuaca.lokasi.lat, cuaca.lokasi.lon]}
+                sorot={namaKota}
+                jumlahPeringatan={perluWaspada.length}
+              />
+            ) : (
+              <Card className="flex h-64 items-center justify-center p-6 text-center">
+                <p className="text-[13px] leading-relaxed text-ink-3">
+                  Peta sedang tidak dapat dimuat. Angka di halaman ini tetap
+                  berasal dari data cuaca yang berhasil diambil.
+                </p>
+              </Card>
+            )}
+
+            <GrafikPerJam perJam={cuaca.perJam} mulai={cuaca.sekarang.waktu} />
           </div>
-        ) : null}
 
-        {/* Kondisi sekarang + ringkasan */}
-        <div className="grid gap-3 xl:grid-cols-[1.3fr_1fr]">
-          <KartuSekarang paket={cuaca} kondisi={kondisi} />
-          <PanelInsight insight={insight} />
+          <div className="space-y-3">
+            <DetailCuaca paket={cuaca} kondisi={kondisi} />
+            <PrakiraanRingkas paket={cuaca} />
+            <DampakRingkas sektor={sektor} />
+          </div>
         </div>
-
-        {/* Grafik per jam */}
-        <GrafikPerJam perJam={cuaca.perJam} mulai={cuaca.sekarang.waktu} />
-
-        {/* Prakiraan harian */}
-        <Card>
-          <CardHeader
-            title="Prakiraan tujuh hari"
-            subtitle="Open-Meteo · suhu minimum dan maksimum, total hujan harian"
-          />
-          <div className="flex gap-2 overflow-x-auto px-5 pb-5">
-            {cuaca.harian.slice(0, 7).map((h) => {
-              const d = new Date(h.tanggal);
-              return (
-                <div
-                  key={h.tanggal}
-                  className="flex min-w-[104px] flex-1 flex-col items-center gap-2 rounded-tile border border-line bg-surface-2 p-3.5 text-center"
-                >
-                  <span className="text-[11.5px] font-bold text-ink-3">
-                    {d.toLocaleDateString("id-ID", { weekday: "short", day: "numeric" })}
-                  </span>
-                  <IkonCuaca kategori={h.kategori} className="size-12" />
-                  <span className="text-[10.5px] leading-tight text-ink-3">
-                    {h.labelCuaca}
-                  </span>
-                  <span className="text-[13px] font-extrabold tabular-nums text-ink">
-                    {Math.round(h.suhuMaks)}°
-                    <span className="ml-1 font-semibold text-ink-3">
-                      {Math.round(h.suhuMin)}°
-                    </span>
-                  </span>
-                  <span className="rounded-pill bg-tint-sky px-2 py-0.5 text-[10.5px] font-bold text-tint-sky-ink">
-                    {h.presipitasi.toFixed(1)} mm
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </Card>
 
         {/* Rantai dampak */}
         <Card id="rantai" className="p-5">
           <h2 className="text-[17px] font-extrabold tracking-tight text-ink">
-            Rantai dampak
+            Dari cuaca, ke mana saja pengaruhnya?
           </h2>
-          <p className="mt-1 text-[13px] leading-relaxed text-ink-2">
-            Dari kondisi cuaca di atas, ke sektor yang terdampak, sampai ke
-            kegiatan warga. Klik tiap simpul untuk melihat dasar angkanya.
+          <p className="mt-1 max-w-3xl text-[13px] leading-relaxed text-ink-2">
+            Hujan tidak berhenti di langit. Ikuti alurnya dari kiri ke kanan —
+            klik salah satu kotak untuk tahu dari mana angkanya berasal.
           </p>
           <RantaiDampak simpul={simpul} className="mt-5" />
         </Card>
 
-        {/* Skor dampak per sektor */}
-        <section id="dampak" className="scroll-mt-20">
+        {/* Rincian enam sektor */}
+        <section id="dampak" className="scroll-mt-4">
           <div className="flex flex-wrap items-end justify-between gap-3 px-1 pb-3 pt-2">
             <div>
-              <h2 className="text-[20px] font-extrabold tracking-tight text-ink">
-                Dampak per sektor
+              <h2 className="text-[19px] font-extrabold tracking-tight text-ink">
+                Rincian enam bidang
               </h2>
-              <p className="mt-1 text-[13px] text-ink-2">
-                Skor 0–100, makin tinggi makin besar dampaknya. Setiap kartu
-                bisa dibuka sampai ke faktor penyusunnya.
+              <p className="mt-1 max-w-xl text-[13px] leading-relaxed text-ink-2">
+                Angka 0–100: makin tinggi, makin besar pengaruh cuaca. Buka
+                “Lihat dasar perhitungan” pada tiap kartu untuk melihat
+                faktornya satu per satu.
               </p>
             </div>
-            <span className="rounded-pill border border-line bg-surface px-3 py-1.5 text-[11.5px] font-semibold text-ink-3 shadow-tile">
+            <span className="rounded-pill border border-line bg-surface px-3 py-1.5 text-[11.5px] font-semibold text-ink-3">
               Indikator analitis, bukan peringatan resmi
             </span>
           </div>
@@ -145,36 +160,31 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
           </div>
         </section>
 
-        {/* BMKG */}
-        <PanelBMKG bmkg={bmkg} catatan={catatanBMKG} />
+        {/* Penjelasan panjang + prakiraan resmi */}
+        <div className="grid gap-3 xl:grid-cols-2">
+          <PanelInsight insight={insight} />
+          <PanelBMKG bmkg={bmkg} catatan={catatanBMKG} />
+        </div>
 
-        {/* Penutup */}
         <div className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5 text-[12px] leading-relaxed text-ink-3 sm:flex-row sm:items-center">
           <ShieldAlert className="size-4 shrink-0" strokeWidth={2.25} aria-hidden />
           <p>
-            Data cuaca {cuaca.sumber.nama}, model diperbarui{" "}
-            {new Date(cuaca.diambilPada).toLocaleString("id-ID", {
-              day: "numeric",
-              month: "long",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-            . Elevasi {cuaca.lokasi.elevasi?.toFixed(0)} mdpl dipakai sebagai
-            pendekatan kasar topografi, bukan data kemiringan lereng. CuacaKita
-            adalah platform analisis informasi — untuk peringatan resmi, rujuk
-            BMKG dan BPBD.
+            Data cuaca {cuaca.sumber.nama}, diambil pukul {jam}. Elevasi{" "}
+            {cuaca.lokasi.elevasi?.toFixed(0)} mdpl dipakai sebagai pendekatan
+            kasar topografi, bukan data kemiringan lereng. CuacaKita adalah
+            platform analisis informasi — untuk peringatan resmi, rujuk BMKG dan
+            BPBD setempat. Dalam keadaan darurat, hubungi 112.
           </p>
         </div>
-      </main>
-    </div>
+      </div>
+    </Kerangka>
   );
 }
 
 function HalamanGagal({ kota }: { kota: string }) {
   return (
-    <div className="app-canvas flex min-h-screen flex-col">
-      <Topbar kota={kota} />
-      <main className="flex flex-1 items-center justify-center px-5 py-20">
+    <Kerangka kota={kota}>
+      <div className="flex min-h-[60vh] items-center justify-center px-5 py-16">
         <Card className="max-w-md p-8 text-center">
           <span className="mx-auto flex size-14 items-center justify-center rounded-panel bg-surface-2 text-ink-3">
             <RefreshCw className="size-6" strokeWidth={2} aria-hidden />
@@ -188,7 +198,11 @@ function HalamanGagal({ kota }: { kota: string }) {
             dengan angka perkiraan sendiri.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            <ButtonLink href={`/dashboard?kota=${encodeURIComponent(LOKASI_BAWAAN)}`} variant="primary" size="md">
+            <ButtonLink
+              href={`/dashboard?kota=${encodeURIComponent(LOKASI_BAWAAN)}`}
+              variant="primary"
+              size="md"
+            >
               Coba lokasi bawaan
             </ButtonLink>
             <Link
@@ -199,7 +213,7 @@ function HalamanGagal({ kota }: { kota: string }) {
             </Link>
           </div>
         </Card>
-      </main>
-    </div>
+      </div>
+    </Kerangka>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
-import { Topbar } from "@/components/dashboard/topbar";
+import { Kerangka } from "@/components/shell/kerangka";
 import { GrafikHistori } from "@/components/histori/grafik-histori";
 import { Card } from "@/components/ui/card";
 import { ButtonLink } from "@/components/ui/button";
@@ -80,9 +80,8 @@ export default async function HistoriPage(props: PageProps<"/histori">) {
     data = await muatHistori(kota, rentang);
   } catch {
     return (
-      <div className="app-canvas flex min-h-screen flex-col">
-        <Topbar kota={kota} />
-        <main className="flex flex-1 items-center justify-center px-5 py-20">
+      <Kerangka kota={kota}>
+        <div className="flex min-h-[60vh] items-center justify-center px-5 py-16">
           <Card className="max-w-md p-8 text-center">
             <h1 className="text-[20px] font-extrabold tracking-tight text-ink">
               Histori tidak dapat dimuat
@@ -95,16 +94,14 @@ export default async function HistoriPage(props: PageProps<"/histori">) {
               Kembali ke dashboard
             </ButtonLink>
           </Card>
-        </main>
-      </div>
+        </div>
+      </Kerangka>
     );
   }
 
   return (
-    <div className="app-canvas min-h-screen">
-      <Topbar kota={data.kota} />
-
-      <main className="mx-auto max-w-[1500px] space-y-3 px-4 py-4 sm:px-6">
+    <Kerangka kota={data.kota}>
+      <div className="space-y-3">
         <div className="flex flex-wrap items-end justify-between gap-4 px-1 pt-2">
           <div>
             <h1 className="text-[22px] font-extrabold tracking-tight text-ink">
@@ -167,7 +164,7 @@ export default async function HistoriPage(props: PageProps<"/histori">) {
           anjlok. Periode pembanding memakai rentang yang sama panjang tepat
           sebelum periode berjalan.
         </p>
-      </main>
-    </div>
+      </div>
+    </Kerangka>
   );
 }
