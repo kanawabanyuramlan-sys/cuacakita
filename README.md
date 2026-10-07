@@ -126,6 +126,7 @@ src/
 │   ├── peringatan/           Sistem peringatan + daftar kota nasional
 │   ├── komoditas/            Dua belas komoditas + simulasi pengandaian
 │   ├── petani/               Mode Petani: komoditas tersimpan + jadwal kerja
+│   ├── perjalanan/           Mode Perjalanan: kota sejalur + jam berangkat
 │   ├── pasokan/              Rantai cuaca → produksi → pasokan → harga
 │   ├── peta/                 Peta cuaca & risiko (Leaflet)
 │   ├── histori/              Histori dan perbandingan antarperiode
@@ -147,6 +148,7 @@ src/
 │   │   ├── pasokan.ts        Lima langkah cuaca sampai harga
 │   │   ├── komoditas.ts      Profil kepekaan dua belas komoditas
 │   │   ├── petani.ts         Fase tanam + jadwal kerja kebun tujuh hari
+│   │   ├── perjalanan.ts     Kota dekat garis asal-tujuan + jam berangkat
 │   │   ├── topografi.ts      Analisis cekungan dari kisi ketinggian
 │   │   ├── harian.ts         Jendela kegiatan + hal yang sering ditemui
 │   │   ├── peringatan.ts     Ambang peringatan mengacu klasifikasi BMKG
@@ -192,6 +194,19 @@ menanam. Hubungan terbalik itu muncul dari rumusnya, bukan ditulis manual.
 Pilihan disimpan di penyimpanan peramban pengguna — tanpa akun, tanpa basis
 data, tidak dikirim ke mana pun. Konsekuensinya disampaikan di layar: pilihan
 hanya berlaku di perangkat itu.
+
+## Mode Perjalanan
+
+Tanpa data rute, perjalanan tetap bisa dibantu: dari 43 kota yang cuacanya
+dipantau, dipilih yang letaknya dekat dengan **garis lurus** antara asal dan
+tujuan. Jarak tiap kota ke garis itu ditampilkan, dan yang lebih dari 30 km
+ditandai "agak jauh dari garis" — berguna sebagai jalur alternatif, tetapi
+belum tentu benar-benar dilewati.
+
+Gambaran keseluruhan diambil dari **ruas terberat**, bukan dirata-ratakan:
+perjalanan hanya senyaman bagian terburuknya. Jam berangkat dinilai dari cuaca
+di kota asal saja, dan keterbatasan itu disebutkan di layar karena perjalanan
+jauh melewati cuaca yang berganti-ganti.
 
 ## Mengapa tidak ada nama jalan
 
