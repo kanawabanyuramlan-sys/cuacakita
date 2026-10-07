@@ -1,7 +1,7 @@
 {
-  "catatan": "Dihasilkan oleh scripts/bangun-wilayah.mjs. Setiap adm4 sudah diuji langsung ke BMKG.",
-  "dibuatPada": "2026-10-07T03:20:22.433Z",
-  "jumlah": 159,
+  "catatan": "Dihasilkan oleh scripts/bangun-wilayah.mjs dan scripts/tambah-wilayah.mjs. Setiap adm4 sudah diuji langsung ke BMKG.",
+  "dibuatPada": "2026-10-07T03:41:05.957Z",
+  "jumlah": 205,
   "kota": [
     {
       "nama": "Aceh Tengah",
@@ -29,6 +29,15 @@
       "lon": 100.4104266226,
       "adm4": "13.07.01.2001",
       "wilayahBMKG": "Kurai, Suliki, Lima Puluh Kota"
+    },
+    {
+      "nama": "Alor",
+      "tipe": "kabupaten",
+      "provinsi": "Nusa Tenggara Timur",
+      "lat": -8.2183569364,
+      "lon": 124.4835239636,
+      "adm4": "53.05.01.1001",
+      "wilayahBMKG": "Kalabahi Barat, Teluk Mutiara, Alor"
     },
     {
       "nama": "Ambon",
@@ -94,6 +103,24 @@
       "wilayahBMKG": "Moengko Lama, Poso Kota, Poso"
     },
     {
+      "nama": "Bangka",
+      "tipe": "kabupaten",
+      "provinsi": "Kepulauan Bangka Belitung",
+      "lat": -1.8578840007,
+      "lon": 106.1222296796,
+      "adm4": "19.01.01.1001",
+      "wilayahBMKG": "Sungailiat, Sungailiat, Bangka"
+    },
+    {
+      "nama": "Bangkalan",
+      "tipe": "kabupaten",
+      "provinsi": "Jawa Timur",
+      "lat": -7.0455853337,
+      "lon": 112.7406406983,
+      "adm4": "35.26.01.1001",
+      "wilayahBMKG": "Mlajah, Bangkalan, Bangkalan"
+    },
+    {
       "nama": "Banjar",
       "tipe": "kota",
       "provinsi": "Jawa Barat",
@@ -101,6 +128,15 @@
       "lon": 108.5267402511,
       "adm4": "32.79.01.1001",
       "wilayahBMKG": "Banjar, Banjar, Kota Banjar"
+    },
+    {
+      "nama": "Banjarbaru",
+      "tipe": "kota",
+      "provinsi": "Kalimantan Selatan",
+      "lat": -3.4701589526,
+      "lon": 114.741466404,
+      "adm4": "63.72.02.1003",
+      "wilayahBMKG": "Landasan Ulin Timur, Landasan Ulin, Kota Banjarbaru"
     },
     {
       "nama": "Banjarmasin",
@@ -148,6 +184,24 @@
       "wilayahBMKG": "Sarongan, Pesanggaran, Banyuwangi"
     },
     {
+      "nama": "Barito Selatan",
+      "tipe": "kabupaten",
+      "provinsi": "Kalimantan Tengah",
+      "lat": -2.3754406861,
+      "lon": 114.9357856592,
+      "adm4": "62.04.01.1003",
+      "wilayahBMKG": "Rantau Kujang, Jenamas, Barito Selatan"
+    },
+    {
+      "nama": "Batam",
+      "tipe": "kota",
+      "provinsi": "Kepulauan Riau",
+      "lat": 1.101047589,
+      "lon": 103.7837563072,
+      "adm4": "21.71.01.1002",
+      "wilayahBMKG": "Pemping, Belakang Padang, Kota Batam"
+    },
+    {
       "nama": "Batu",
       "tipe": "kota",
       "provinsi": "Jawa Timur",
@@ -155,6 +209,15 @@
       "lon": 112.5405890201,
       "adm4": "35.79.01.1001",
       "wilayahBMKG": "Temas, Batu, Kota Batu"
+    },
+    {
+      "nama": "Bau Bau",
+      "tipe": "kota",
+      "provinsi": "Sulawesi Tenggara",
+      "lat": -5.4817749334,
+      "lon": 122.573749082,
+      "adm4": "74.72.01.1007",
+      "wilayahBMKG": "Katobengke, Betoambari, Kota Bau Bau"
     },
     {
       "nama": "Bekasi",
@@ -182,6 +245,24 @@
       "lon": 102.3207331977,
       "adm4": "17.71.01.1001",
       "wilayahBMKG": "Pagar Dewa, Selebar, Kota Bengkulu"
+    },
+    {
+      "nama": "Berau",
+      "tipe": "kabupaten",
+      "provinsi": "Kalimantan Timur",
+      "lat": 1.6945617466,
+      "lon": 117.3658469029,
+      "adm4": "64.03.01.2002",
+      "wilayahBMKG": "Panaan, Kelay, Berau"
+    },
+    {
+      "nama": "Biak Numfor",
+      "tipe": "kabupaten",
+      "provinsi": "Papua",
+      "lat": -1.155573215,
+      "lon": 136.0578170648,
+      "adm4": "91.06.01.1001",
+      "wilayahBMKG": "Sorido, Biak Kota, Biak Numfor"
     },
     {
       "nama": "Bima",
@@ -391,6 +472,15 @@
       "wilayahBMKG": "Pasir Putih, Sawangan, Kota Depok"
     },
     {
+      "nama": "Dompu",
+      "tipe": "kabupaten",
+      "provinsi": "Nusa Tenggara Barat",
+      "lat": -8.5364219202,
+      "lon": 118.4864722038,
+      "adm4": "52.05.01.1001",
+      "wilayahBMKG": "Bada, Dompu, Dompu"
+    },
+    {
       "nama": "Donggala",
       "tipe": "kabupaten",
       "provinsi": "Sulawesi Tengah",
@@ -400,6 +490,15 @@
       "wilayahBMKG": "Momunu, Momunu, Buol"
     },
     {
+      "nama": "Dumai",
+      "tipe": "kota",
+      "provinsi": "Riau",
+      "lat": 1.6844483492,
+      "lon": 101.4228133733,
+      "adm4": "14.72.01.1003",
+      "wilayahBMKG": "Pangkalan Sesai, Dumai Barat, Kota Dumai"
+    },
+    {
       "nama": "Ende",
       "tipe": "kabupaten",
       "provinsi": "Nusa Tenggara Timur",
@@ -407,6 +506,15 @@
       "lon": 120.2475737073,
       "adm4": "53.11.01.1001",
       "wilayahBMKG": "Kambajawa, Kota Waingapu, Sumba Timur"
+    },
+    {
+      "nama": "Fak Fak",
+      "tipe": "kabupaten",
+      "provinsi": "Papua Barat",
+      "lat": -2.9720250932,
+      "lon": 132.2971971605,
+      "adm4": "92.03.01.1001",
+      "wilayahBMKG": "Fak Fak Selatan, Fak-Fak, Fak Fak"
     },
     {
       "nama": "Garut",
@@ -461,6 +569,15 @@
       "lon": 110.6080550897,
       "adm4": "34.03.01.2001",
       "wilayahBMKG": "Wonosari, Wonosari, Gunungkidul"
+    },
+    {
+      "nama": "Halmahera Utara",
+      "tipe": "kabupaten",
+      "provinsi": "Maluku Utara",
+      "lat": 1.8232988705,
+      "lon": 127.8439173872,
+      "adm4": "82.03.04.2001",
+      "wilayahBMKG": "Soa-Sio, Galela, Halmahera Utara"
     },
     {
       "nama": "Indragiri Hilir",
@@ -535,6 +652,24 @@
       "wilayahBMKG": "Simpang Iv Sipin, Telanaipura, Kota Jambi"
     },
     {
+      "nama": "Jayapura",
+      "tipe": "kota",
+      "provinsi": "Papua",
+      "lat": -2.5264449691,
+      "lon": 140.6568889518,
+      "adm4": "91.71.01.1001",
+      "wilayahBMKG": "Gurabesi, Jayapura Utara, Kota Jayapura"
+    },
+    {
+      "nama": "Jayawijaya",
+      "tipe": "kabupaten",
+      "provinsi": "Papua Pegunungan",
+      "lat": -4.1018068257,
+      "lon": 138.9457862227,
+      "adm4": "95.01.01.1001",
+      "wilayahBMKG": "Wamena Kota, Wamena, Jayawijaya"
+    },
+    {
       "nama": "Jember",
       "tipe": "kabupaten",
       "provinsi": "Jawa Timur",
@@ -542,6 +677,15 @@
       "lon": 113.3352407794,
       "adm4": "35.09.01.2001",
       "wilayahBMKG": "Padomasan, Jombang, Jember"
+    },
+    {
+      "nama": "Jembrana",
+      "tipe": "kabupaten",
+      "provinsi": "Bali",
+      "lat": -8.2904832033,
+      "lon": 114.6305106749,
+      "adm4": "51.01.01.1006",
+      "wilayahBMKG": "Baler Bale Agung, Negara, Jembrana"
     },
     {
       "nama": "Jepara",
@@ -578,6 +722,15 @@
       "lon": 107.2861551531,
       "adm4": "32.15.01.1001",
       "wilayahBMKG": "Karawang Kulon, Karawang Barat, Karawang"
+    },
+    {
+      "nama": "Karimun",
+      "tipe": "kabupaten",
+      "provinsi": "Kepulauan Riau",
+      "lat": 0.7871674199,
+      "lon": 103.6885357352,
+      "adm4": "21.02.01.1003",
+      "wilayahBMKG": "Moro, Moro, Karimun"
     },
     {
       "nama": "Karo",
@@ -643,6 +796,33 @@
       "wilayahBMKG": "Sengon, Prambanan, Klaten"
     },
     {
+      "nama": "Kolaka",
+      "tipe": "kabupaten",
+      "provinsi": "Sulawesi Tenggara",
+      "lat": -4.0764255258,
+      "lon": 121.682660288,
+      "adm4": "74.01.01.1001",
+      "wilayahBMKG": "19 Nopember, Wundulako, Kolaka"
+    },
+    {
+      "nama": "Kotabaru",
+      "tipe": "kabupaten",
+      "provinsi": "Kalimantan Selatan",
+      "lat": -4.8457980524,
+      "lon": 115.7532002835,
+      "adm4": "63.02.01.2001",
+      "wilayahBMKG": "Labuan Barat, Pulau Sembilan, Kotabaru"
+    },
+    {
+      "nama": "Kotamobagu",
+      "tipe": "kota",
+      "provinsi": "Sulawesi Utara",
+      "lat": 0.750119533,
+      "lon": 124.3218538468,
+      "adm4": "71.74.01.1005",
+      "wilayahBMKG": "Biga, Kotamobagu Utara, Kota Kotamobagu"
+    },
+    {
       "nama": "Kotawaringin Timur",
       "tipe": "kabupaten",
       "provinsi": "Kalimantan Tengah",
@@ -650,6 +830,15 @@
       "lon": 112.6599905604,
       "adm4": "62.02.03.2001",
       "wilayahBMKG": "Tangar, Mentaya Hulu, Kotawaringin Timur"
+    },
+    {
+      "nama": "Kubu Raya",
+      "tipe": "kabupaten",
+      "provinsi": "Kalimantan Barat",
+      "lat": -0.0710660252,
+      "lon": 109.3712469865,
+      "adm4": "61.12.01.2001",
+      "wilayahBMKG": "Sungai Raya, Sungai Raya, Kubu Raya"
     },
     {
       "nama": "Kudus",
@@ -724,6 +913,15 @@
       "wilayahBMKG": "Bujung Tenuk, Menggala, Tulang Bawang"
     },
     {
+      "nama": "Langsa",
+      "tipe": "kota",
+      "provinsi": "Aceh",
+      "lat": 4.4384981535,
+      "lon": 97.9917612852,
+      "adm4": "11.74.01.2007",
+      "wilayahBMKG": "Buket Medang Ara, Langsa Timur, Kota Langsa"
+    },
+    {
       "nama": "Lebak",
       "tipe": "kabupaten",
       "provinsi": "Banten",
@@ -749,6 +947,15 @@
       "lon": 116.5195340418,
       "adm4": "52.03.01.2001",
       "wilayahBMKG": "Tanjung Luar, Keruak, Lombok Timur"
+    },
+    {
+      "nama": "Lubuk Linggau",
+      "tipe": "kota",
+      "provinsi": "Sumatera Selatan",
+      "lat": -3.2818979538,
+      "lon": 102.9147483969,
+      "adm4": "16.73.01.1001",
+      "wilayahBMKG": "Air Kuti, Lubuk Linggau Timur I, Kota Lubuk Linggau"
     },
     {
       "nama": "Lumajang",
@@ -785,6 +992,15 @@
       "lon": 108.1701115695,
       "adm4": "32.10.01.2001",
       "wilayahBMKG": "Cipasung, Lemahsugih, Majalengka"
+    },
+    {
+      "nama": "Majene",
+      "tipe": "kabupaten",
+      "provinsi": "Sulawesi Barat",
+      "lat": -3.5343335718,
+      "lon": 118.9634200993,
+      "adm4": "76.05.01.1001",
+      "wilayahBMKG": "Banggae, Banggae, Majene"
     },
     {
       "nama": "Makassar",
@@ -895,6 +1111,15 @@
       "wilayahBMKG": "Metro, Metro Pusat, Kota Metro"
     },
     {
+      "nama": "Mimika",
+      "tipe": "kabupaten",
+      "provinsi": "Papua Tengah",
+      "lat": -4.5558887212,
+      "lon": 136.8723479638,
+      "adm4": "94.04.01.1001",
+      "wilayahBMKG": "Koperapoka, Mimika Baru, Mimika"
+    },
+    {
       "nama": "Minahasa",
       "tipe": "kabupaten",
       "provinsi": "Sulawesi Utara",
@@ -911,6 +1136,15 @@
       "lon": 112.4553538173,
       "adm4": "35.76.02.1001",
       "wilayahBMKG": "Gununggedangan, Magersari, Kota Mojokerto"
+    },
+    {
+      "nama": "Morowali",
+      "tipe": "kabupaten",
+      "provinsi": "Sulawesi Tengah",
+      "lat": -2.5527785631,
+      "lon": 121.9712035534,
+      "adm4": "72.06.05.1014",
+      "wilayahBMKG": "Mendui, Bungku Tengah, Morowali"
     },
     {
       "nama": "Muaro Jambi",
@@ -931,6 +1165,33 @@
       "wilayahBMKG": "Kwamki, Mimika Baru, Mimika"
     },
     {
+      "nama": "Natuna",
+      "tipe": "kabupaten",
+      "provinsi": "Kepulauan Riau",
+      "lat": 3.0818538713,
+      "lon": 107.7444580349,
+      "adm4": "21.03.04.1003",
+      "wilayahBMKG": "Sabang Barat, Midai, Natuna"
+    },
+    {
+      "nama": "Ngawi",
+      "tipe": "kabupaten",
+      "provinsi": "Jawa Timur",
+      "lat": -7.5757141066,
+      "lon": 111.1689269241,
+      "adm4": "35.21.01.2001",
+      "wilayahBMKG": "Wonosari, Sine, Ngawi"
+    },
+    {
+      "nama": "Nunukan",
+      "tipe": "kabupaten",
+      "provinsi": "Kalimantan Utara",
+      "lat": 4.0568868509,
+      "lon": 117.8968351518,
+      "adm4": "65.03.01.2001",
+      "wilayahBMKG": "Tanjungkarang, Sebatik, Nunukan"
+    },
+    {
       "nama": "Ogan Komering Ilir",
       "tipe": "kabupaten",
       "provinsi": "Sumatera Selatan",
@@ -947,6 +1208,24 @@
       "lon": 100.3624567146,
       "adm4": "13.71.01.1001",
       "wilayahBMKG": "Belakang Pondok, Padang Selatan, Kota Padang"
+    },
+    {
+      "nama": "Padang Panjang",
+      "tipe": "kota",
+      "provinsi": "Sumatera Barat",
+      "lat": -0.4616053959,
+      "lon": 100.418125791,
+      "adm4": "13.74.01.1001",
+      "wilayahBMKG": "Ganting, Padang Panjang Timur, Kota Padang Panjang"
+    },
+    {
+      "nama": "Pagar Alam",
+      "tipe": "kota",
+      "provinsi": "Sumatera Selatan",
+      "lat": -4.0213975452,
+      "lon": 103.2479168265,
+      "adm4": "16.72.01.1001",
+      "wilayahBMKG": "Sukorejo, Pagar Alam Utara, Kota Pagar Alam"
     },
     {
       "nama": "Palangka Raya",
@@ -1021,6 +1300,15 @@
       "wilayahBMKG": "Opas Indah, Taman Sari, Kota Pangkal Pinang"
     },
     {
+      "nama": "Parepare",
+      "tipe": "kota",
+      "provinsi": "Sulawesi Selatan",
+      "lat": -4.0199906259,
+      "lon": 119.6514036357,
+      "adm4": "73.72.01.1004",
+      "wilayahBMKG": "Lompoe, Bacukiki, Kota Parepare"
+    },
+    {
       "nama": "Pariaman",
       "tipe": "kota",
       "provinsi": "Sumatera Barat",
@@ -1046,6 +1334,15 @@
       "lon": 110.8229492695,
       "adm4": "33.18.01.2001",
       "wilayahBMKG": "Prawoto, Sukolilo, Pati"
+    },
+    {
+      "nama": "Payakumbuh",
+      "tipe": "kota",
+      "provinsi": "Sumatera Barat",
+      "lat": -0.2537943327,
+      "lon": 100.6128160655,
+      "adm4": "13.76.01.1002",
+      "wilayahBMKG": "Pakan Sinayan, Payakumbuh Barat, Kota Payakumbuh"
     },
     {
       "nama": "Pekalongan",
@@ -1102,6 +1399,24 @@
       "wilayahBMKG": "Kombo, Dampal Selatan, Toli Toli"
     },
     {
+      "nama": "Prabumulih",
+      "tipe": "kota",
+      "provinsi": "Sumatera Selatan",
+      "lat": -3.4532266479,
+      "lon": 104.2260854477,
+      "adm4": "16.74.01.1001",
+      "wilayahBMKG": "Prabumulih, Prabumulih Barat, Kota Prabumulih"
+    },
+    {
+      "nama": "Pringsewu",
+      "tipe": "kabupaten",
+      "provinsi": "Lampung",
+      "lat": -5.3539753253,
+      "lon": 104.9568307967,
+      "adm4": "18.10.01.1001",
+      "wilayahBMKG": "Fajaresuk, Pringsewu, Pringsewu"
+    },
+    {
       "nama": "Probolinggo",
       "tipe": "kota",
       "provinsi": "Jawa Timur",
@@ -1129,6 +1444,15 @@
       "wilayahBMKG": "Harjobinangun, Grabag, Purworejo"
     },
     {
+      "nama": "Rejang Lebong",
+      "tipe": "kabupaten",
+      "provinsi": "Bengkulu",
+      "lat": -3.4021273987,
+      "lon": 102.9770518192,
+      "adm4": "17.02.06.1004",
+      "wilayahBMKG": "Kota Padang, Kota Padang, Rejang Lebong"
+    },
+    {
       "nama": "Rembang",
       "tipe": "kabupaten",
       "provinsi": "Jawa Tengah",
@@ -1136,6 +1460,15 @@
       "lon": 111.2684523305,
       "adm4": "33.17.01.2001",
       "wilayahBMKG": "Ronggo Mulyo, Sumber, Rembang"
+    },
+    {
+      "nama": "Sabang",
+      "tipe": "kota",
+      "provinsi": "Aceh",
+      "lat": 5.8663581775,
+      "lon": 95.3137862281,
+      "adm4": "11.72.01.2004",
+      "wilayahBMKG": "Krueng Raya, Sukakarya, Kota Sabang"
     },
     {
       "nama": "Salatiga",
@@ -1183,6 +1516,15 @@
       "wilayahBMKG": "Serang, Serang, Kota Serang"
     },
     {
+      "nama": "Siak",
+      "tipe": "kabupaten",
+      "provinsi": "Riau",
+      "lat": 0.8001633469,
+      "lon": 102.050023273,
+      "adm4": "14.08.01.1001",
+      "wilayahBMKG": "Kampung Dalam, Siak, Siak"
+    },
+    {
       "nama": "Sibolga",
       "tipe": "kota",
       "provinsi": "Sumatera Utara",
@@ -1210,6 +1552,15 @@
       "wilayahBMKG": "Satar Ngkeling, Wae Rii, Manggarai"
     },
     {
+      "nama": "Simalungun",
+      "tipe": "kabupaten",
+      "provinsi": "Sumatera Utara",
+      "lat": 2.9094871165,
+      "lon": 99.0750649463,
+      "adm4": "12.08.01.2001",
+      "wilayahBMKG": "Silampuyang, Siantar, Simalungun"
+    },
+    {
       "nama": "Singkawang",
       "tipe": "kota",
       "provinsi": "Kalimantan Barat",
@@ -1217,6 +1568,24 @@
       "lon": 109.0141252875,
       "adm4": "61.72.01.1001",
       "wilayahBMKG": "Roban, Singkawang Tengah, Kota Singkawang"
+    },
+    {
+      "nama": "Sinjai",
+      "tipe": "kabupaten",
+      "provinsi": "Sulawesi Selatan",
+      "lat": -5.2122409736,
+      "lon": 120.004521101,
+      "adm4": "73.07.01.1001",
+      "wilayahBMKG": "Tassililu, Sinjai Barat, Sinjai"
+    },
+    {
+      "nama": "Situbondo",
+      "tipe": "kabupaten",
+      "provinsi": "Jawa Timur",
+      "lat": -7.8555833498,
+      "lon": 113.6621368452,
+      "adm4": "35.12.01.2001",
+      "wilayahBMKG": "Pategalan, Jatibanteng, Situbondo"
     },
     {
       "nama": "Sleman",
@@ -1244,6 +1613,15 @@
       "lon": 140.6396105676,
       "adm4": "91.71.05.1001",
       "wilayahBMKG": "Hedam, Heram, Kota Jayapura"
+    },
+    {
+      "nama": "Sragen",
+      "tipe": "kabupaten",
+      "provinsi": "Jawa Tengah",
+      "lat": -7.4398475848,
+      "lon": 110.7819241703,
+      "adm4": "33.14.01.2001",
+      "wilayahBMKG": "Keden, Kalijambe, Sragen"
     },
     {
       "nama": "Subang",
@@ -1289,6 +1667,15 @@
       "lon": 113.868830476,
       "adm4": "35.29.02.2001",
       "wilayahBMKG": "Pinggirpapas, Kalianget, Sumenep"
+    },
+    {
+      "nama": "Sungai Penuh",
+      "tipe": "kota",
+      "provinsi": "Jambi",
+      "lat": -2.0601502352,
+      "lon": 101.3981763536,
+      "adm4": "15.72.01.1001",
+      "wilayahBMKG": "Sungai Penuh, Sungai Penuh, Kota Sungai Penuh"
     },
     {
       "nama": "Surabaya",
@@ -1345,6 +1732,15 @@
       "wilayahBMKG": "Tanjung Pinang Barat, Tanjung Pinang Barat, Kota Tanjung Pinang"
     },
     {
+      "nama": "Tanjungbalai",
+      "tipe": "kota",
+      "provinsi": "Sumatera Utara",
+      "lat": 2.9583769527,
+      "lon": 99.8008595903,
+      "adm4": "12.74.01.1001",
+      "wilayahBMKG": "Tanjungbalai Kota I, Tanjungbalai Selatan, Kota Tanjung Balai"
+    },
+    {
       "nama": "Tarakan",
       "tipe": "kota",
       "provinsi": "Kalimantan Utara",
@@ -1363,6 +1759,15 @@
       "wilayahBMKG": "Yudanagara, Cihideung, Kota Tasikmalaya"
     },
     {
+      "nama": "Tebing Tinggi",
+      "tipe": "kota",
+      "provinsi": "Sumatera Utara",
+      "lat": 3.3089766185,
+      "lon": 99.1345191215,
+      "adm4": "12.76.01.1002",
+      "wilayahBMKG": "Lubuk Baru, Padang Hulu, Kota Tebing Tinggi"
+    },
+    {
       "nama": "Tegal",
       "tipe": "kota",
       "provinsi": "Jawa Tengah",
@@ -1370,6 +1775,15 @@
       "lon": 109.1156740865,
       "adm4": "33.76.01.1001",
       "wilayahBMKG": "Pesurungan Kidul, Tegal Barat, Kota Tegal"
+    },
+    {
+      "nama": "Temanggung",
+      "tipe": "kabupaten",
+      "provinsi": "Jawa Tengah",
+      "lat": -7.2940543192,
+      "lon": 110.1273772982,
+      "adm4": "33.23.01.2001",
+      "wilayahBMKG": "Bulu, Bulu, Temanggung"
     },
     {
       "nama": "Ternate",

@@ -8,9 +8,11 @@ import type { TitikPeta } from "@/server/peta";
 import {
   LAPISAN,
   Legenda,
+  PETA_DASAR,
   PetaDasar,
   nilaiTitik,
   type IdLapisan,
+  type IdPeta,
 } from "./peta-dasar";
 
 /**
@@ -28,6 +30,7 @@ export function PetaKlien({
   diambilPada: string;
 }) {
   const [lapisan, setLapisan] = useState<IdLapisan>("banjir");
+  const [dasar, setDasar] = useState<IdPeta>("standar");
   const info = LAPISAN.find((l) => l.id === lapisan)!;
 
   const tertinggi = useMemo(
@@ -47,8 +50,29 @@ export function PetaKlien({
           pusat={[-2.5, 118]}
           zoom={5}
           tinggi="min(72vh, 620px)"
+          petaDasar={dasar}
         />
-        <Legenda lapisan={lapisan} />
+        {lapisan === "angin" ? null : <Legenda lapisan={lapisan} />}
+
+        {/* Pemilih peta dasar, mengambang di kanan atas */}
+        <div className="absolute right-4 top-4 z-[500] flex gap-1">
+          {(Object.keys(PETA_DASAR) as IdPeta[]).map((id) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setDasar(id)}
+              aria-pressed={dasar === id}
+              className={cn(
+                "rounded-pill px-3 py-1.5 text-[11.5px] font-bold shadow-card transition-colors",
+                dasar === id
+                  ? "bg-brand-600 text-white"
+                  : "kaca text-ink hover:text-brand-700",
+              )}
+            >
+              {PETA_DASAR[id].nama}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="space-y-3">
@@ -76,6 +100,10 @@ export function PetaKlien({
           </div>
           <p className="mt-3 rounded-tile bg-surface-2 p-3 text-[12px] leading-relaxed text-ink-2">
             {info.awam}
+          </p>
+          <p className="mt-2 text-[11.5px] leading-snug text-ink-3">
+            Peta dasar dapat diganti ke Medan untuk melihat kontur dan
+            ketinggian, atau ke Satelit untuk melihat tutupan lahan.
           </p>
         </div>
 

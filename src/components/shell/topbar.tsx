@@ -7,6 +7,7 @@ import { CircleCheck, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { LogoMark } from "@/components/ui/logo";
 import { CariLokasi } from "./cari-lokasi";
+import { DeteksiLokasi } from "./deteksi-lokasi";
 
 /** `bawaKota` menandai halaman yang bergantung pada lokasi terpilih,
  *  supaya pindah menu tidak diam-diam melempar pengguna kembali ke
@@ -104,6 +105,8 @@ export function Topbar({
             Diperbarui {diperbaruiPada}
           </span>
         ) : null}
+
+        <DeteksiLokasi ringkas />
 
         <button
           type="button"

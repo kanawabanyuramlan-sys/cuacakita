@@ -199,9 +199,20 @@ export async function ambilCuacaBanyak(
 
   let r: Response;
   try {
-    r = await fetch(url, { next: { revalidate: 900 } });
+    // Tiga puluh menit, bukan lima belas seperti permintaan satu kota.
+    // Open-Meteo menghitung kuota PER LOKASI, jadi satu permintaan peta
+    // bernilai lebih dari dua ratus panggilan. Pada irama lima belas menit
+    // itu menjadi sekitar 800 panggilan per jam hanya untuk peta, dan satu
+    // lonjakan pengunjung tepat setelah cache kedaluwarsa sudah cukup
+    // memicu HTTP 429 — yang memang terjadi saat fitur ini diuji.
+    r = await fetch(url, { next: { revalidate: 1800 } });
   } catch (e) {
     throw new GagalAmbilCuaca("Tidak dapat menghubungi layanan cuaca", e);
+  }
+  if (r.status === 429) {
+    throw new GagalAmbilCuaca(
+      "Layanan cuaca sedang membatasi jumlah permintaan. Data peta akan tersedia kembali beberapa saat lagi.",
+    );
   }
   if (!r.ok) {
     throw new GagalAmbilCuaca(`Layanan cuaca menolak permintaan (${r.status})`);

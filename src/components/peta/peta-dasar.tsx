@@ -1,8 +1,46 @@
 "use client";
 
-import { CircleMarker, MapContainer, Popup, TileLayer, Tooltip } from "react-leaflet";
+import L from "leaflet";
+import {
+  CircleMarker,
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  Tooltip,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { TitikPeta } from "@/server/peta";
+
+/* ── Peta dasar yang dapat dipilih ─────────────────────────────────── */
+
+export type IdPeta = "standar" | "medan" | "satelit";
+
+export const PETA_DASAR: Record<
+  IdPeta,
+  { nama: string; url: string; atribusi: string; maxZoom: number }
+> = {
+  standar: {
+    nama: "Standar",
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    atribusi:
+      '&copy; Kontributor <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 19,
+  },
+  medan: {
+    nama: "Medan",
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    atribusi:
+      'Peta medan &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA), data &copy; Kontributor OpenStreetMap',
+    maxZoom: 17,
+  },
+  satelit: {
+    nama: "Satelit",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    atribusi: "Citra &copy; Esri, Maxar, Earthstar Geographics",
+    maxZoom: 18,
+  },
+};
 
 /**
  * Peta dasar yang dipakai bersama halaman Peta Risiko dan dashboard.
@@ -19,7 +57,8 @@ export type IdLapisan =
   | "transportasi"
   | "pertanian"
   | "hujan"
-  | "suhu";
+  | "suhu"
+  | "angin";
 
 export const LAPISAN: {
   id: IdLapisan;
@@ -71,6 +110,13 @@ export const LAPISAN: {
     keterangan: "Suhu udara saat ini",
     awam: "Panas atau sejuknya udara saat ini.",
   },
+  {
+    id: "angin",
+    nama: "Arah angin",
+    satuan: "km/j",
+    keterangan: "Arah dan kecepatan angin saat ini",
+    awam: "Panah menunjuk ke arah angin BERTIUP. Makin panjang dan gelap, makin kencang.",
+  },
 ];
 
 const RAMP = [
@@ -84,13 +130,68 @@ const RAMP = [
 export function nilaiTitik(t: TitikPeta, lapisan: IdLapisan) {
   if (lapisan === "hujan") return t.hujan24j;
   if (lapisan === "suhu") return t.suhu;
+  if (lapisan === "angin") return t.hembusanMaks;
   return t.skor[lapisan];
 }
 
 export function batasLapisan(lapisan: IdLapisan) {
   if (lapisan === "hujan") return [0.5, 5, 20, 50];
   if (lapisan === "suhu") return [24, 27, 30, 33];
+  // Ambang angin mengikuti titik-titik yang punya arti nyata: 28 km/jam
+  // mulai mengganggu sepeda motor, 45 adalah ambang peringatan BMKG untuk
+  // perahu nelayan, 60 mulai merusak atap ringan.
+  if (lapisan === "angin") return [15, 28, 45, 60];
   return [25, 50, 75, 90];
+}
+
+/**
+ * Panah angin sebagai divIcon.
+ *
+ * `anginArah` adalah arah angin BERASAL (konvensi meteorologi), jadi
+ * panahnya diputar 180 derajat agar menunjuk ke arah angin BERTIUP —
+ * itulah yang dibayangkan orang saat melihat panah di peta. Keduanya
+ * sering tertukar, dan arah yang terbalik lebih buruk daripada tidak ada
+ * panah sama sekali.
+ */
+function ikonAngin(arahDari: number, kelas: number, kencang: boolean) {
+  const putar = (arahDari + 180) % 360;
+  const panjang = 11 + kelas * 3;
+  const ukuran = 44;
+  const t = ukuran / 2;
+  const warna = ["#5598e7", "#2a78d6", "#256abf", "#184f95", "#0d366b"][kelas];
+
+  return L.divIcon({
+    className: "panah-angin",
+    iconSize: [ukuran, ukuran],
+    iconAnchor: [t, t],
+    // Panah digambar dua kali: lapisan putih tebal di bawah, warna di
+    // atasnya. Tanpa halo ini, panah biru lenyap di atas laut biru pada
+    // peta Medan dan Satelit — persis yang terjadi saat pertama diuji.
+    html: `<svg width="${ukuran}" height="${ukuran}" viewBox="0 0 ${ukuran} ${ukuran}"
+        style="transform: rotate(${putar}deg); overflow: visible">
+        <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <g stroke="#ffffff" stroke-width="${kencang ? 6.4 : 5.6}" opacity="0.95">
+            <line x1="${t}" y1="${t + panjang}" x2="${t}" y2="${t - panjang}" />
+            <path d="M${t - 5} ${t - panjang + 6} L${t} ${t - panjang} L${t + 5} ${t - panjang + 6}" />
+          </g>
+          <g stroke="${warna}" stroke-width="${kencang ? 3.2 : 2.4}">
+            <line class="alir" x1="${t}" y1="${t + panjang}" x2="${t}" y2="${t - panjang}" />
+            <path d="M${t - 5} ${t - panjang + 6} L${t} ${t - panjang} L${t + 5} ${t - panjang + 6}" />
+          </g>
+        </g>
+        <circle cx="${t}" cy="${t + panjang}" r="2.6" fill="${warna}"
+                stroke="#ffffff" stroke-width="1.6" />
+      </svg>`,
+  });
+}
+
+const MATA_ANGIN = [
+  "utara", "timur laut", "timur", "tenggara",
+  "selatan", "barat daya", "barat", "barat laut",
+];
+
+function arahMata(derajat: number) {
+  return MATA_ANGIN[Math.round(derajat / 45) % 8];
 }
 
 function kelasDari(nilai: number, lapisan: IdLapisan) {
@@ -152,6 +253,7 @@ export function PetaDasar({
   tinggi,
   sorot,
   zoomRoda = true,
+  petaDasar = "standar",
 }: {
   titik: TitikPeta[];
   lapisan: IdLapisan;
@@ -166,8 +268,10 @@ export function PetaDasar({
    * — gangguan kecil yang sangat terasa di dashboard yang panjang.
    */
   zoomRoda?: boolean;
+  petaDasar?: IdPeta;
 }) {
   const info = LAPISAN.find((l) => l.id === lapisan)!;
+  const dasar = PETA_DASAR[petaDasar];
 
   return (
     <MapContainer
@@ -177,16 +281,40 @@ export function PetaDasar({
       style={{ height: tinggi, width: "100%" }}
       className="z-0"
     >
-      {/* Ubin standar OpenStreetMap: bebas dipakai tanpa kunci API.
-          CartoDB dan Mapbox kini mewajibkan kunci, yang berarti peta akan
-          mati begitu kuncinya tidak terpasang di lingkungan penilaian. */}
+      {/* Ketiga sumber ubin bebas dipakai tanpa kunci API. CartoDB dan
+          Mapbox kini mewajibkan kunci, yang berarti peta akan mati begitu
+          kuncinya tidak terpasang di lingkungan penilaian. */}
       <TileLayer
-        attribution='&copy; Kontributor <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxZoom={19}
+        key={petaDasar}
+        attribution={dasar.atribusi}
+        url={dasar.url}
+        maxZoom={dasar.maxZoom}
       />
 
-      {titik.map((t) => {
+      {lapisan === "angin"
+        ? titik.map((t) => {
+            const kelas = kelasDari(t.hembusanMaks, "angin");
+            return (
+              <Marker
+                key={t.nama + t.lat}
+                position={[t.lat, t.lon]}
+                icon={ikonAngin(t.anginArah, kelas, sorot === t.nama)}
+              >
+                <Tooltip direction="top" offset={[0, -10]}>
+                  <span className="text-[12px] font-bold">
+                    {t.nama}: {t.angin} km/j, hembusan {t.hembusanMaks} km/j
+                    <br />
+                    dari {arahMata(t.anginArah)}
+                  </span>
+                </Tooltip>
+              </Marker>
+            );
+          })
+        : null}
+
+      {lapisan === "angin"
+        ? null
+        : titik.map((t) => {
         const nilai = nilaiTitik(t, lapisan);
         const kelas = kelasDari(nilai, lapisan);
         const disorot = sorot === t.nama;

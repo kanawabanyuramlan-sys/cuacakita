@@ -141,7 +141,7 @@ src/
 │   │   ├── laut.ts           Adapter gelombang + pencarian perairan terdekat
 │   │   └── elevasi.ts        Kisi ketinggian untuk analisis cekungan
 │   ├── cuaca.ts              Orkestrasi satu halaman
-│   ├── peta.ts               Data peta — 43 kota dalam SATU permintaan
+│   ├── peta.ts               Data peta — 205 kota dalam SATU permintaan
 │   └── histori.ts            Data historis + periode pembanding
 │
 ├── lib/
@@ -163,7 +163,7 @@ src/
 │   └── lokasi.ts             Daftar kota terverifikasi
 │
 ├── components/               Komponen UI
-└── data/wilayah.json         159 kota, tiap kode adm4 sudah diuji ke BMKG
+└── data/wilayah.json         205 kota, tiap kode adm4 sudah diuji ke BMKG
 ```
 
 Setiap adapter sumber data wajib menghasilkan bentuk kanonik di
@@ -200,6 +200,50 @@ Pilihan disimpan di penyimpanan peramban pengguna — tanpa akun, tanpa basis
 data, tidak dikirim ke mana pun. Konsekuensinya disampaikan di layar: pilihan
 hanya berlaku di perangkat itu.
 
+## Dua sumber kode wilayah
+
+`scripts/bangun-wilayah.mjs` memakai dataset lama dan harus **menebak**
+kode desa dengan pola umum (1001, 2001, 1002). Itulah penyebab kegagalan
+terbesarnya: Kota Batam, misalnya, tidak punya desa bernomor 1001 — daftarnya
+mulai dari 1002.
+
+`scripts/tambah-wilayah.mjs` memakai [wilayah.id](https://wilayah.id), data
+Permendagri yang masih dipelihara dan kodenya **sudah berformat titik persis
+seperti yang diminta BMKG**. Tidak ada yang ditebak: kode desa diambil apa
+adanya dari daftar. Sumber ini juga sudah mengenal pemekaran Papua menjadi
+enam provinsi, yang membuat beberapa kota tidak ditemukan pada dataset lama.
+
+Keduanya tetap menguji setiap kode ke BMKG sebelum menuliskannya.
+
+## Batas laju yang nyata
+
+Open-Meteo menghitung kuota **per lokasi**, jadi satu permintaan peta untuk
+205 kota bernilai 205 panggilan. Pada irama 15 menit itu menjadi sekitar 800
+panggilan per jam hanya untuk peta, dan pengujian memang memicu HTTP 429.
+Karena itu pengambilan massal memakai jendela cache 30 menit, dan status 429
+ditangani dengan pesan tersendiri — bukan dibiarkan jatuh sebagai galat umum.
+
+## Deteksi lokasi
+
+Koordinat dari peramban **tidak pernah dikirim ke mana pun** — tidak ke
+server CuacaKita, tidak ke layanan geocoding. Daftar kota sudah ikut terkirim
+bersama halaman, jadi pencocokan kota terdekat dihitung sepenuhnya di
+perangkat pengguna, dan yang berpindah hanyalah nama kotanya. Bila kota
+pantauan terdekat lebih dari 120 km, pengguna diberi tahu jaraknya dan
+dibiarkan memutuskan sendiri.
+
+## Peta
+
+Tiga peta dasar, semuanya bebas kunci API: **Standar** (OpenStreetMap),
+**Medan** (OpenTopoMap, menampilkan kontur dan ketinggian), dan **Satelit**
+(Esri World Imagery).
+
+Lapisan **Arah angin** menggambar panah yang menunjuk ke arah angin
+*bertiup* — bukan arah datangnya. Keduanya sering tertukar, dan panah yang
+terbalik lebih buruk daripada tidak ada panah sama sekali. Tiap panah
+digambar dua kali, putih tebal di bawah dan berwarna di atasnya, karena tanpa
+halo itu panah biru lenyap di atas laut biru peta Medan dan Satelit.
+
 ## Kondisi laut
 
 Berbeda dari modul lain, ambang di sini **tidak disusun sendiri**. Dipakai
@@ -217,7 +261,7 @@ dalam jangkauan memang bukan kota pesisir, dan panelnya tidak ditampilkan.
 
 ## Mode Perjalanan
 
-Tanpa data rute, perjalanan tetap bisa dibantu: dari 43 kota yang cuacanya
+Tanpa data rute, perjalanan tetap bisa dibantu: dari 205 kota yang cuacanya
 dipantau, dipilih yang letaknya dekat dengan **garis lurus** antara asal dan
 tujuan. Jarak tiap kota ke garis itu ditampilkan, dan yang lebih dari 30 km
 ditandai "agak jauh dari garis" — berguna sebagai jalur alternatif, tetapi

@@ -8,7 +8,7 @@ import type { TitikPeta } from "@/server/peta";
 import { LAPISAN, Legenda, PetaDasar, type IdLapisan } from "./peta-dasar";
 
 /** Lapisan yang ditawarkan di dashboard — empat yang paling sering ditanya. */
-const PILIHAN: IdLapisan[] = ["banjir", "longsor", "transportasi", "hujan"];
+const PILIHAN: IdLapisan[] = ["banjir", "longsor", "hujan", "angin"];
 
 export function PetaDashboard({
   titik,
@@ -89,7 +89,7 @@ export function PetaDashboard({
           })}
         </div>
 
-        <Legenda lapisan={lapisan} />
+        {lapisan === "angin" ? null : <Legenda lapisan={lapisan} />}
       </div>
 
       {/* Keterangan bawah: menjelaskan lapisan dengan bahasa biasa */}
