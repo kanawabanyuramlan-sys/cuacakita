@@ -151,6 +151,7 @@ export function PetaDasar({
   zoom = 5,
   tinggi,
   sorot,
+  zoomRoda = true,
 }: {
   titik: TitikPeta[];
   lapisan: IdLapisan;
@@ -159,6 +160,12 @@ export function PetaDasar({
   tinggi: string;
   /** Nama kota yang sedang dilihat — diberi cincin pembeda. */
   sorot?: string;
+  /**
+   * Matikan untuk peta yang tertanam di tengah halaman. Peta yang menelan
+   * roda mouse membuat halaman tidak bisa digulir saat kursor melintasinya
+   * — gangguan kecil yang sangat terasa di dashboard yang panjang.
+   */
+  zoomRoda?: boolean;
 }) {
   const info = LAPISAN.find((l) => l.id === lapisan)!;
 
@@ -166,7 +173,7 @@ export function PetaDasar({
     <MapContainer
       center={pusat}
       zoom={zoom}
-      scrollWheelZoom
+      scrollWheelZoom={zoomRoda}
       style={{ height: tinggi, width: "100%" }}
       className="z-0"
     >

@@ -13,6 +13,8 @@ import { KartuSektor } from "@/components/dashboard/kartu-sektor";
 import { GrafikPerJam } from "@/components/dashboard/grafik-perjam";
 import { PanelBMKG, PanelInsight } from "@/components/dashboard/panel";
 import { TanyaCuacaKita } from "@/components/dashboard/tanya";
+import { HalSering, RencanaHarian } from "@/components/dashboard/rencana-harian";
+import { AreaRendahKota } from "@/components/dashboard/area-rendah";
 import { PetaRingkas } from "@/components/peta/peta-pembungkus";
 import { RantaiDampak } from "@/components/rantai-dampak";
 import { Card } from "@/components/ui/card";
@@ -23,6 +25,9 @@ import { bangunRantai } from "@/lib/impact/rantai";
 import { susunInsight } from "@/lib/impact/insight";
 import { susunSaran } from "@/lib/impact/saran";
 import { susunTanya } from "@/lib/impact/tanya";
+import { susunHalUmum, susunJendelaHarian } from "@/lib/impact/harian";
+import { analisisTopografi } from "@/lib/impact/topografi";
+import { ambilKisiElevasi } from "@/server/sources/elevasi";
 import { susunPeringatan } from "@/lib/impact/peringatan";
 import { LOKASI_BAWAAN } from "@/lib/lokasi";
 
@@ -58,6 +63,13 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
   const insight = susunInsight(cuaca, kondisi, sektor);
   const saran = susunSaran(cuaca, kondisi, sektor);
   const tanya = susunTanya(cuaca, kondisi, sektor);
+  const jendela = susunJendelaHarian(cuaca);
+  const halSering = susunHalUmum(cuaca, kondisi, jendela);
+
+  // Analisis bentuk tanah bersifat pelengkap: kegagalannya hanya
+  // menyembunyikan kartunya, tidak menjatuhkan halaman.
+  const kisi = await ambilKisiElevasi(cuaca.lokasi.lat, cuaca.lokasi.lon);
+  const topografi = kisi ? analisisTopografi(kisi, kondisi) : null;
   const namaKota = data.kota?.nama ?? cuaca.lokasi.nama;
   const perluWaspada = sektor.filter((s) => s.skor >= 50);
 
@@ -129,7 +141,19 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
             <DetailCuaca paket={cuaca} kondisi={kondisi} />
             <PrakiraanRingkas paket={cuaca} />
             <DampakRingkas sektor={sektor} />
+            {topografi ? (
+              <AreaRendahKota analisis={topografi} kota={namaKota} />
+            ) : null}
           </div>
+        </div>
+
+        {/* Kegiatan sehari-hari dan akibat yang biasa menyusul */}
+        <div
+          style={{ "--tunda": "150ms" } as React.CSSProperties}
+          className="muncul grid gap-3 xl:grid-cols-2"
+        >
+          <RencanaHarian jendela={jendela} />
+          <HalSering hal={halSering} />
         </div>
 
         {/* Rantai dampak */}

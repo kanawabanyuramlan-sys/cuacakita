@@ -36,6 +36,7 @@ export function PetaDashboard({
           zoom={7}
           tinggi="clamp(300px, 42vh, 420px)"
           sorot={sorot}
+          zoomRoda={false}
         />
 
         {/* Lencana peringatan, mengambang di kiri atas seperti pada referensi */}
@@ -94,7 +95,10 @@ export function PetaDashboard({
       {/* Keterangan bawah: menjelaskan lapisan dengan bahasa biasa */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-surface px-4 py-2.5">
         <p className="min-w-0 flex-1 text-[12px] leading-snug text-ink-2">
-          {info.awam}
+          {info.awam}{" "}
+          <span className="text-ink-3">
+            Perbesar peta dengan tombol + dan − di pojok kiri atas.
+          </span>
         </p>
         <Link
           href="/peta"
