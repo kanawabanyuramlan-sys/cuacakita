@@ -33,6 +33,7 @@ terdengar lebih pintar daripada yang sebenarnya.
 |---|---|---|---|
 | [Open-Meteo](https://open-meteo.com) | Mesin utama | **Tidak perlu** | Prakiraan per jam & harian, curah hujan, angin, kelembapan, tekanan, jarak pandang, indeks UV, elevasi titik, dan histori sampai 92 hari |
 | [BMKG](https://bmkg.go.id) | Pembanding resmi | Tidak perlu | Prakiraan resmi pemerintah, ditampilkan berdampingan — bukan menggantikan |
+| [Open-Meteo Marine](https://open-meteo.com) | Gelombang laut | **Tidak perlu** | Tinggi, arah, dan periode gelombang untuk kota pesisir |
 | Harga komoditas | — | — | **Belum terhubung.** Simpul Harga hanya menunjukkan arah tekanan dari sisi cuaca |
 
 Aplikasi ini **berjalan penuh tanpa satu pun variabel environment**. Tidak ada
@@ -127,6 +128,7 @@ src/
 │   ├── komoditas/            Dua belas komoditas + simulasi pengandaian
 │   ├── petani/               Mode Petani: komoditas tersimpan + jadwal kerja
 │   ├── perjalanan/           Mode Perjalanan: kota sejalur + jam berangkat
+│   ├── nelayan/              Kondisi laut + ambang keselamatan pelayaran
 │   ├── pasokan/              Rantai cuaca → produksi → pasokan → harga
 │   ├── peta/                 Peta cuaca & risiko (Leaflet)
 │   ├── histori/              Histori dan perbandingan antarperiode
@@ -135,7 +137,9 @@ src/
 ├── server/                   Hanya berjalan di server ("server-only")
 │   ├── sources/
 │   │   ├── open-meteo.ts     Adapter Open-Meteo (mesin utama)
-│   │   └── bmkg.ts           Adapter BMKG (pembanding resmi)
+│   │   ├── bmkg.ts           Adapter BMKG (pembanding resmi)
+│   │   ├── laut.ts           Adapter gelombang + pencarian perairan terdekat
+│   │   └── elevasi.ts        Kisi ketinggian untuk analisis cekungan
 │   ├── cuaca.ts              Orkestrasi satu halaman
 │   ├── peta.ts               Data peta — 43 kota dalam SATU permintaan
 │   └── histori.ts            Data historis + periode pembanding
@@ -149,6 +153,7 @@ src/
 │   │   ├── komoditas.ts      Profil kepekaan dua belas komoditas
 │   │   ├── petani.ts         Fase tanam + jadwal kerja kebun tujuh hari
 │   │   ├── perjalanan.ts     Kota dekat garis asal-tujuan + jam berangkat
+│   │   ├── nelayan.ts        Klasifikasi gelombang + ambang per jenis kapal
 │   │   ├── topografi.ts      Analisis cekungan dari kisi ketinggian
 │   │   ├── harian.ts         Jendela kegiatan + hal yang sering ditemui
 │   │   ├── peringatan.ts     Ambang peringatan mengacu klasifikasi BMKG
@@ -158,7 +163,7 @@ src/
 │   └── lokasi.ts             Daftar kota terverifikasi
 │
 ├── components/               Komponen UI
-└── data/wilayah.json         43 kota, tiap kode adm4 sudah diuji ke BMKG
+└── data/wilayah.json         159 kota, tiap kode adm4 sudah diuji ke BMKG
 ```
 
 Setiap adapter sumber data wajib menghasilkan bentuk kanonik di
@@ -194,6 +199,21 @@ menanam. Hubungan terbalik itu muncul dari rumusnya, bukan ditulis manual.
 Pilihan disimpan di penyimpanan peramban pengguna — tanpa akun, tanpa basis
 data, tidak dikirim ke mana pun. Konsekuensinya disampaikan di layar: pilihan
 hanya berlaku di perangkat itu.
+
+## Kondisi laut
+
+Berbeda dari modul lain, ambang di sini **tidak disusun sendiri**. Dipakai
+klasifikasi tinggi gelombang BMKG (Tenang sampai Sangat Ekstrem) dan tabel
+peringatan keselamatan pelayaran BMKG, yang memasangkan kecepatan angin dan
+tinggi gelombang per jenis kapal. Nyawa nelayan terlalu mahal untuk
+dipertaruhkan pada ambang karangan sendiri.
+
+Perairan terdekat dicari saat permintaan: enam belas titik calon (delapan
+arah mata angin pada dua jarak) dikirim dalam satu permintaan, dan yang
+menjawab dengan angka berarti benar-benar laut. API ini mengembalikan
+`null` untuk titik daratan, jadi ia tidak pernah mengarang angka — dan
+null itu sendiri yang dipakai untuk menemukan laut. Kota tanpa titik laut
+dalam jangkauan memang bukan kota pesisir, dan panelnya tidak ditampilkan.
 
 ## Mode Perjalanan
 

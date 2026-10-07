@@ -25,21 +25,66 @@ const KEPALA = {
 };
 
 const SASARAN = [
-  ["11", "BANDA ACEH"], ["12", "MEDAN"], ["13", "PADANG"], ["14", "PEKANBARU"],
-  ["15", "JAMBI"], ["16", "PALEMBANG"], ["17", "BENGKULU"],
-  ["18", "BANDAR LAMPUNG"], ["19", "PANGKAL PINANG"], ["21", "BATAM"],
-  ["31", "JAKARTA PUSAT"], ["31", "JAKARTA SELATAN"],
-  ["32", "BANDUNG"], ["32", "BOGOR"], ["32", "BEKASI"], ["32", "GARUT"],
-  ["32", "CIANJUR"], ["32", "CIREBON"],
-  ["33", "SEMARANG"], ["33", "SURAKARTA"], ["33", "BREBES"], ["33", "MAGELANG"],
-  ["34", "YOGYAKARTA"], ["34", "SLEMAN"],
-  ["35", "SURABAYA"], ["35", "MALANG"], ["35", "BANYUWANGI"], ["35", "JEMBER"],
-  ["36", "SERANG"], ["36", "TANGERANG"],
-  ["51", "DENPASAR"], ["52", "MATARAM"], ["53", "KUPANG"],
-  ["61", "PONTIANAK"], ["62", "PALANGKA RAYA"], ["63", "BANJARMASIN"],
-  ["64", "SAMARINDA"], ["64", "BALIKPAPAN"],
-  ["71", "MANADO"], ["72", "PALU"], ["73", "MAKASSAR"], ["74", "KENDARI"],
-  ["75", "GORONTALO"], ["81", "AMBON"], ["91", "JAYAPURA"],
+  // Aceh
+  ["11", "BANDA ACEH"], ["11", "LHOKSEUMAWE"], ["11", "ACEH UTARA"], ["11", "ACEH TENGAH"],
+  // Sumatera Utara
+  ["12", "MEDAN"], ["12", "BINJAI"], ["12", "PEMATANG SIANTAR"], ["12", "SIBOLGA"],
+  ["12", "DELI SERDANG"], ["12", "KARO"], ["12", "SIMALUNGUN"],
+  // Sumatera Barat
+  ["13", "PADANG"], ["13", "BUKITTINGGI"], ["13", "PARIAMAN"], ["13", "AGAM"], ["13", "SOLOK"],
+  // Riau & Kepri
+  ["14", "PEKANBARU"], ["14", "DUMAI"], ["14", "KAMPAR"], ["14", "INDRAGIRI HILIR"],
+  ["21", "BATAM"], ["21", "TANJUNG PINANG"], ["21", "BINTAN"],
+  // Jambi, Sumsel, Bengkulu, Lampung, Babel
+  ["15", "JAMBI"], ["15", "MUARO JAMBI"], ["15", "KERINCI"],
+  ["16", "PALEMBANG"], ["16", "LUBUK LINGGAU"], ["16", "OGAN KOMERING ILIR"], ["16", "BANYUASIN"],
+  ["17", "BENGKULU"], ["17", "REJANG LEBONG"],
+  ["18", "BANDAR LAMPUNG"], ["18", "METRO"], ["18", "LAMPUNG SELATAN"], ["18", "LAMPUNG TENGAH"],
+  ["19", "PANGKAL PINANG"], ["19", "BELITUNG"],
+  // DKI Jakarta
+  ["31", "JAKARTA PUSAT"], ["31", "JAKARTA SELATAN"], ["31", "JAKARTA TIMUR"],
+  ["31", "JAKARTA BARAT"], ["31", "JAKARTA UTARA"],
+  // Jawa Barat
+  ["32", "BANDUNG"], ["32", "BOGOR"], ["32", "BEKASI"], ["32", "DEPOK"], ["32", "CIMAHI"],
+  ["32", "CIREBON"], ["32", "TASIKMALAYA"], ["32", "SUKABUMI"], ["32", "BANJAR"],
+  ["32", "GARUT"], ["32", "CIANJUR"], ["32", "KARAWANG"], ["32", "SUBANG"], ["32", "INDRAMAYU"],
+  ["32", "MAJALENGKA"], ["32", "KUNINGAN"], ["32", "PANGANDARAN"], ["32", "PURWAKARTA"],
+  // Jawa Tengah
+  ["33", "SEMARANG"], ["33", "SURAKARTA"], ["33", "SALATIGA"], ["33", "MAGELANG"],
+  ["33", "PEKALONGAN"], ["33", "TEGAL"], ["33", "BREBES"], ["33", "CILACAP"],
+  ["33", "BANYUMAS"], ["33", "KUDUS"], ["33", "JEPARA"], ["33", "PATI"], ["33", "REMBANG"],
+  ["33", "KLATEN"], ["33", "BOYOLALI"], ["33", "WONOSOBO"], ["33", "PURWOREJO"], ["33", "KEBUMEN"],
+  // DI Yogyakarta
+  ["34", "YOGYAKARTA"], ["34", "SLEMAN"], ["34", "BANTUL"], ["34", "GUNUNG KIDUL"], ["34", "KULON PROGO"],
+  // Jawa Timur
+  ["35", "SURABAYA"], ["35", "MALANG"], ["35", "KEDIRI"], ["35", "MADIUN"], ["35", "BLITAR"],
+  ["35", "PASURUAN"], ["35", "PROBOLINGGO"], ["35", "MOJOKERTO"], ["35", "BATU"],
+  ["35", "SIDOARJO"], ["35", "GRESIK"], ["35", "LAMONGAN"], ["35", "TUBAN"], ["35", "BANYUWANGI"],
+  ["35", "JEMBER"], ["35", "LUMAJANG"], ["35", "BOJONEGORO"], ["35", "PAMEKASAN"], ["35", "SUMENEP"],
+  // Banten
+  ["36", "SERANG"], ["36", "TANGERANG"], ["36", "CILEGON"], ["36", "PANDEGLANG"], ["36", "LEBAK"],
+  // Bali & Nusa Tenggara
+  ["51", "DENPASAR"], ["51", "BADUNG"], ["51", "BULELENG"], ["51", "GIANYAR"], ["51", "TABANAN"],
+  ["52", "MATARAM"], ["52", "BIMA"], ["52", "SUMBAWA"], ["52", "LOMBOK TIMUR"],
+  ["53", "KUPANG"], ["53", "ENDE"], ["53", "SIKKA"], ["53", "MANGGARAI BARAT"], ["53", "SUMBA TIMUR"],
+  // Kalimantan
+  ["61", "PONTIANAK"], ["61", "SINGKAWANG"], ["61", "KETAPANG"], ["61", "SAMBAS"],
+  ["62", "PALANGKA RAYA"], ["62", "KOTAWARINGIN TIMUR"], ["62", "KAPUAS"],
+  ["63", "BANJARMASIN"], ["63", "BANJARBARU"], ["63", "KOTABARU"], ["63", "TANAH LAUT"],
+  ["64", "SAMARINDA"], ["64", "BALIKPAPAN"], ["64", "BONTANG"], ["64", "KUTAI KARTANEGARA"],
+  ["65", "TARAKAN"], ["65", "BULUNGAN"],
+  // Sulawesi
+  ["71", "MANADO"], ["71", "BITUNG"], ["71", "TOMOHON"], ["71", "MINAHASA"],
+  ["72", "PALU"], ["72", "DONGGALA"], ["72", "POSO"], ["72", "BANGGAI"],
+  ["73", "MAKASSAR"], ["73", "PARE-PARE"], ["73", "PALOPO"], ["73", "GOWA"], ["73", "BONE"],
+  ["73", "BULUKUMBA"], ["73", "MAROS"],
+  ["74", "KENDARI"], ["74", "BAU-BAU"], ["74", "KOLAKA"],
+  ["75", "GORONTALO"], ["76", "MAMUJU"], ["76", "POLEWALI MANDAR"],
+  // Maluku & Papua
+  ["81", "AMBON"], ["81", "MALUKU TENGAH"], ["81", "TUAL"],
+  ["82", "TERNATE"], ["82", "TIDORE KEPULAUAN"],
+  ["91", "SORONG"], ["91", "MANOKWARI"], ["91", "FAKFAK"],
+  ["94", "JAYAPURA"], ["94", "MERAUKE"], ["94", "MIMIKA"], ["94", "BIAK NUMFOR"], ["94", "NABIRE"],
 ];
 
 const jeda = (ms) => new Promise((r) => setTimeout(r, ms));

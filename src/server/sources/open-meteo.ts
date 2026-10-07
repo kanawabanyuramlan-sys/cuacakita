@@ -146,6 +146,26 @@ export async function cariLokasi(
     }));
 }
 
+/** Bagian dari VAR_PER_JAM dan VAR_HARIAN yang dibutuhkan mesin dampak.
+ *  Sisanya hanya dipakai halaman satu kota, jadi tidak ikut pada
+ *  pengambilan massal. Medan yang hilang menjadi null dengan sendirinya. */
+const VAR_PER_JAM_RINGKAS = [
+  "temperature_2m",
+  "relative_humidity_2m",
+  "precipitation",
+  "weather_code",
+  "wind_speed_10m",
+] as const;
+
+const VAR_HARIAN_RINGKAS = [
+  "weather_code",
+  "temperature_2m_max",
+  "temperature_2m_min",
+  "precipitation_sum",
+  "wind_speed_10m_max",
+  "wind_gusts_10m_max",
+] as const;
+
 /**
  * Mengambil banyak lokasi sekaligus.
  *
@@ -167,8 +187,12 @@ export async function ambilCuacaBanyak(
   url.searchParams.set("latitude", daftar.map((l) => l.lat.toFixed(4)).join(","));
   url.searchParams.set("longitude", daftar.map((l) => l.lon.toFixed(4)).join(","));
   url.searchParams.set("current", VAR_SEKARANG.join(","));
-  url.searchParams.set("hourly", VAR_PER_JAM.join(","));
-  url.searchParams.set("daily", VAR_HARIAN.join(","));
+  // Hanya variabel yang benar-benar dipakai mesin dampak. Dengan 159 kota,
+  // membawa indeks UV, peluang hujan, dan jam terbit-terbenam menambah
+  // ratusan kilobita tanpa dipakai sama sekali — dan Next.js berhenti
+  // menyimpan respons ke cache begitu melewati 2 MB.
+  url.searchParams.set("hourly", VAR_PER_JAM_RINGKAS.join(","));
+  url.searchParams.set("daily", VAR_HARIAN_RINGKAS.join(","));
   url.searchParams.set("timezone", "auto");
   url.searchParams.set("forecast_days", "3");
   url.searchParams.set("past_days", "3");

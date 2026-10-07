@@ -17,6 +17,7 @@ const menu = [
   { label: "Komoditas", href: "/komoditas", bawaKota: true, lencana: false },
   { label: "Mode Petani", href: "/petani", bawaKota: true, lencana: false },
   { label: "Perjalanan", href: "/perjalanan", bawaKota: false, lencana: false },
+  { label: "Laut", href: "/nelayan", bawaKota: true, lencana: false },
   { label: "Pasokan", href: "/pasokan", bawaKota: true, lencana: false },
   { label: "Peta Risiko", href: "/peta", bawaKota: false, lencana: false },
   { label: "Riwayat", href: "/histori", bawaKota: true, lencana: false },
