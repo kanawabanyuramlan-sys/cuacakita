@@ -125,6 +125,7 @@ src/
 │   ├── dashboard/            Ringkasan cuaca + dampak
 │   ├── peringatan/           Sistem peringatan + daftar kota nasional
 │   ├── komoditas/            Dua belas komoditas + simulasi pengandaian
+│   ├── petani/               Mode Petani: komoditas tersimpan + jadwal kerja
 │   ├── pasokan/              Rantai cuaca → produksi → pasokan → harga
 │   ├── peta/                 Peta cuaca & risiko (Leaflet)
 │   ├── histori/              Histori dan perbandingan antarperiode
@@ -145,6 +146,9 @@ src/
 │   │   ├── rantai.ts         Rantai dampak + tingkat keyakinan
 │   │   ├── pasokan.ts        Lima langkah cuaca sampai harga
 │   │   ├── komoditas.ts      Profil kepekaan dua belas komoditas
+│   │   ├── petani.ts         Fase tanam + jadwal kerja kebun tujuh hari
+│   │   ├── topografi.ts      Analisis cekungan dari kisi ketinggian
+│   │   ├── harian.ts         Jendela kegiatan + hal yang sering ditemui
 │   │   ├── peringatan.ts     Ambang peringatan mengacu klasifikasi BMKG
 │   │   ├── saran.ts          Saran harian bahasa sehari-hari
 │   │   ├── tanya.ts          Tanya jawab terarah dari data
@@ -172,6 +176,35 @@ Skor dan rumus baru muncul setelahnya, bagi yang ingin menelusuri.
 **Tanya CuacaKita** memakai daftar pertanyaan siap pakai, bukan kolom ketik
 bebas. Bagi orang yang baru membuka situs cuaca, melihat pertanyaan yang
 memang ada di kepalanya lebih membantu daripada kursor berkedip.
+
+## Mode Petani
+
+Petani tidak bertanya "berapa milimeter hujan besok", melainkan "kapan saya
+bisa menyemprot" dan "hari mana yang cukup kering untuk panen". Mode Petani
+menyimpan komoditas yang ditanam beserta **tahapnya** — hujan yang sama bisa
+tidak berarti apa-apa pada masa tumbuh tetapi merugikan saat berbunga — lalu
+menilai tujuh hari ke depan untuk lima pekerjaan kebun.
+
+Hasilnya konsisten dengan sendirinya: hari yang hujan menjatuhkan nilai
+menyemprot, memanen, dan menjemur, sekaligus menaikkan nilai memupuk dan
+menanam. Hubungan terbalik itu muncul dari rumusnya, bukan ditulis manual.
+
+Pilihan disimpan di penyimpanan peramban pengguna — tanpa akun, tanpa basis
+data, tidak dikirim ke mana pun. Konsekuensinya disampaikan di layar: pilihan
+hanya berlaku di perangkat itu.
+
+## Mengapa tidak ada nama jalan
+
+Permintaan yang paling sering muncul adalah "sebutkan jalan mana yang harus
+dihindari karena banjir". CuacaKita **tidak** memenuhinya, karena tidak punya
+data jaringan jalan, catatan titik banjir per ruas, data saluran air, maupun
+lalu lintas. Menyebut nama jalan berarti mengarang, dan karangan semacam itu
+berbahaya — orang bisa memutar ke jalan yang justru lebih buruk.
+
+Yang dihitung sungguhan adalah **bentuk tanah**: kisi ketinggian 81 titik
+(sekitar 10 × 10 km) diambil per kota, lalu cekungan dideteksi dengan bentuk
+sederhana Topographic Position Index dan dikalikan pemicu hujan. Hasilnya
+disampaikan sebagai **arah dan jarak** dari pusat kota.
 
 ## Sistem peringatan
 
